@@ -1,0 +1,24 @@
+{
+	"name": "dimadin/wis-wp-plugin",
+	"description": "WIS WP Plugin",
+	"keywords": ["weather"],
+	"type": "wordpress-plugin",
+	"license": "GPL",
+	"authors": [
+		{
+			"name": "Milan Dinić",
+			"email": "milan@srpski.biz",
+			"homepage": "http://blog.milandinic.com/"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0",
+		"dimadin/wp-temporary": "dev-master",
+		"sunra/php-simple-html-dom-parser": "v1.5.0"
+	},
+    "autoload": {
+		"psr-4": {
+			"dimadin\\WIS\\": "inc/"
+		}
+    }
+}
