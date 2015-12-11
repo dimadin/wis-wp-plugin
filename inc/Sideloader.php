@@ -288,7 +288,7 @@ class Sideloader {
 
 		$file = $this->current_map_remote_image_url;
 
-		// Set variables for storage, fix file filename for query strings.
+		// Set variables for storage, fix file filename for query strings
 		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches );
 		if ( ! $matches ) {
 			// Invalid image URL
@@ -299,7 +299,7 @@ class Sideloader {
 		//$file_array['name'] = basename( $matches[0] );
 		$file_array['name'] = basename( $this->current_map_type . $this->current_map_image_extension );
 
-		// Download file to temp location.
+		// Download file to temp location
 		$file_array['tmp_name'] = download_url( $file );
 
 		// Check there is an error storing temporarily file
