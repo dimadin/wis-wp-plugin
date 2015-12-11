@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: WIS WP Plugin
- * Plugin URI:  http://vreme.milandinic.com/
+ * Plugin URI:  https://vreme.milandinic.com/
  * Description: REST API, scrapping, sideloading, reporting and more for current Serbian weather.
  * Author:      Milan Dinić
  * Author URI:  http://blog.milandinic.com/
