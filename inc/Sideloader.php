@@ -302,7 +302,7 @@ class Sideloader {
 		// Download file to temp location.
 		$file_array['tmp_name'] = download_url( $file );
 
-		// If error storing temporarily, return the error.
+		// Check there is an error storing temporarily file
 		if ( is_wp_error( $file_array['tmp_name'] ) ) {
 			return;
 		}
