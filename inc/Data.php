@@ -431,6 +431,7 @@ class Data {
 
 		// Use real Celsius symbol
 		$forecast = str_replace( ' Ц.', '°C.', $forecast );
+		$forecast = str_replace( ' Ц,', '°C,', $forecast );
 		$forecast = str_replace( ' Ц ', '°C ', $forecast );
 
 		// Convert heading to lower one
