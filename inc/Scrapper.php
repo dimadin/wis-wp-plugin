@@ -53,7 +53,7 @@ class Scrapper {
 			// Loop through each <td> with class 'bela75' in it
 			foreach ( $tr->find( 'td.bela75' ) as $td ) {
 				// Only proceed if this is third <td>
-				if ( 3 == $td_num ) {
+				if ( 2 == $td_num ) {
 					// Loop through each <a> in it
 					foreach ( $tr->find( 'a' ) as $a ) {
 						// Only proceed if this is second <a>
