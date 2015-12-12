@@ -48,8 +48,14 @@ class Scrapper {
 		$td_num = 1;
 		$a_num = 1;
 
-		// Find <div> then <table> in it, then loop through each <tr> in it
-		foreach ( $dom->find( 'div[id=napomena350_450]', 0 )->find( 'table', 0 )->find( 'tr' ) as $tr ) {
+		// Find <div> with ID 'napomena350_450'
+		$div = $dom->find( 'div[id=napomena350_450]', 0 );
+
+		// Find <table> in <div>
+		$table= $div->find( 'table', 0 );
+
+		// Loop through each <tr> in <table>
+		foreach ( $table->find( 'tr' ) as $tr ) {
 			// Loop through each <td> with class 'bela75' in it
 			foreach ( $tr->find( 'td.bela75' ) as $td ) {
 				// Only proceed if this is third <td>
@@ -89,8 +95,14 @@ class Scrapper {
 		// Load content in HTML DOM parser
 		$dom_2 = HtmlDomParser::str_get_html( $page_2 );
 
-		// Find <div> then <div> in it, then <img> in it
-		$img = $dom_2->find( 'div[id=sadrzaj]', 0 )->find( 'div', 0 )->find( 'img', 0 );
+		// Find <div> with ID 'sadrzaj'
+		$div = $dom_2->find( 'div[id=sadrzaj]', 0 );
+
+		// Find <div> in <div>
+		$div_2 = $div->find( 'div', 0 );
+
+		// Find <img> in <div>
+		$img = $div_2->find( 'img', 0 );
 
 		// Only proceed if image exists
 		if ( ! $img ) {
