@@ -22,6 +22,9 @@ class REST_API {
 	 * @access public
 	 */
 	public function rest_api_init( $wp_rest_server ) {
+		// Disable default CORS setting
+		remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
+
 		// Register route for reports
 		register_rest_route( 'wis/v1', '/reports', array(
 			array(
