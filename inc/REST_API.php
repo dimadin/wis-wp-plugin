@@ -22,6 +22,9 @@ class REST_API {
 	 * @access public
 	 */
 	public function rest_api_init( $wp_rest_server ) {
+		// Allow all origins
+		$wp_rest_server->send_header( 'Access-Control-Allow-Origin', '*' );
+
 		// Disable default CORS setting
 		remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
 
