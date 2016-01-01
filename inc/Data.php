@@ -433,6 +433,7 @@ class Data {
 		$forecast = str_replace( ' Ц.', '°C.', $forecast );
 		$forecast = str_replace( ' Ц,', '°C,', $forecast );
 		$forecast = str_replace( ' Ц ', '°C ', $forecast );
+		$forecast = str_replace( '°Ц',  '°C',  $forecast );
 
 		// Convert heading to lower one
 		$forecast = str_replace( 'h3', 'h4', $forecast );
