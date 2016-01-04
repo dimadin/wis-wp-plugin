@@ -435,6 +435,9 @@ class Data {
 		$forecast = str_replace( ' Ц ', '°C ', $forecast );
 		$forecast = str_replace( '°Ц',  '°C',  $forecast );
 
+		// Use centimetre symbol
+		$forecast = str_replace( 'цм', 'cm', $forecast );
+
 		// Convert heading to lower one
 		$forecast = str_replace( 'h3', 'h4', $forecast );
 
