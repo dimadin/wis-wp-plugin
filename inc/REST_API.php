@@ -187,7 +187,7 @@ class REST_API {
 			'name'       => 'Тренутне температуре и време',
 			'id'         => 'weather-table',
 			'type'       => 'weather',
-			'cities'     => Optimizer::optimize( Data::weather() ),
+			'cities'     => Data::weather(),
 		);
 
 		$response = new \WP_REST_Response( $data );
