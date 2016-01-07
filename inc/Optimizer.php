@@ -11,7 +11,7 @@ class Optimizer {
 	 * @param array $content Content that should be optimized.
 	 * @return array $content Optimized content.
 	 */
-	public static function do( $content ) {
+	public static function optimize( $content ) {
 		// Only if width was submitted
 		if ( ! isset( $_GET['width'] ) ) {
 			return $content;

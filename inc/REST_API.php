@@ -121,7 +121,7 @@ class REST_API {
 			'name'       => 'Радарске слике',
 			'id'         => 'radar-maps',
 			'type'       => 'thumbnails',
-			'thumbnails' => Optimizer::do( Data::radar() ),
+			'thumbnails' => Optimizer::optimize( Data::radar() ),
 		);
 
 		$response = new \WP_REST_Response( $data );
@@ -143,7 +143,7 @@ class REST_API {
 			'name'       => 'Сателитске слике',
 			'id'         => 'satellite-maps',
 			'type'       => 'thumbnails',
-			'thumbnails' => Optimizer::do( Data::satellite() ),
+			'thumbnails' => Optimizer::optimize( Data::satellite() ),
 		);
 
 		$response = new \WP_REST_Response( $data );
@@ -165,7 +165,7 @@ class REST_API {
 			'name'       => 'Слике муња',
 			'id'         => 'lightning-maps',
 			'type'       => 'thumbnails',
-			'thumbnails' => Optimizer::do( Data::lightning() ),
+			'thumbnails' => Optimizer::optimize( Data::lightning() ),
 		);
 
 		$response = new \WP_REST_Response( $data );
@@ -187,7 +187,7 @@ class REST_API {
 			'name'       => 'Тренутне температуре и време',
 			'id'         => 'weather-table',
 			'type'       => 'weather',
-			'cities'     => Optimizer::do( Data::weather() ),
+			'cities'     => Optimizer::optimize( Data::weather() ),
 		);
 
 		$response = new \WP_REST_Response( $data );
