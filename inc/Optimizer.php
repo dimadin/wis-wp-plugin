@@ -28,8 +28,15 @@ class Optimizer {
 			'strip' => 'all',
 		);
 
-		// Get protocol currently used
-		$protocol = is_ssl() ? 'https://' : 'http://';
+		// What protocol is currently used
+		if ( is_ssl() ) {
+			$protocol = 'https://';
+
+			// Fetch from HTTPS origin
+			$args['ssl'] = 1;
+		} else {
+			$protocol = 'http://';
+		}
 
 		// Loop through each item
 		foreach ( $content as &$item ) {
