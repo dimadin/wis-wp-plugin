@@ -88,7 +88,7 @@ class Scrapper {
 
 		// Unset HTML DOM of first page
 		unset( $dom );
-		
+
 		// Open page and get its content
 		$page_2 = wp_remote_retrieve_body( wp_remote_get( $page_2_url ) );
 
@@ -303,12 +303,14 @@ class Scrapper {
 		$dom = HtmlDomParser::str_get_html( $page );
 
 		// Remove WP Call-to-action content
-		$dom->find( 'div[class=wp_cta_container]', 0 )->innertext = '';
+		if ( $dom->find( 'div[class=wp_cta_container]', 0 ) ) {
+			$dom->find( 'div[class=wp_cta_container]', 0 )->innertext = '';
+		}
 
 		// Find <div> with entry content
 		$entry = $dom->find( 'div[class=entry-inner]', 0 );
 
-		$text = $entry->innertext;
+		$text = $entry ? $entry->innertext : '';
 
 		// Add title and text in response
 		$forecast = array(

@@ -11,7 +11,9 @@
  */
 
 // Load dependencies
-require __DIR__ . '/vendor/autoload.php';
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require __DIR__ . '/vendor/autoload.php';
+}
 
 /*
  * Initialize a plugin.
@@ -21,3 +23,6 @@ require __DIR__ . '/vendor/autoload.php';
  */
 add_action( 'plugins_loaded', '\dimadin\WIS\REST_API::get_instance', 10 );
 add_action( 'plugins_loaded', '\dimadin\WIS\Reports::get_instance',  10 );
+
+// Clean expired temporaries
+add_action( 'wp_scheduled_delete', '\WP_Temporary::clean' );
