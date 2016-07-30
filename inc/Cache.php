@@ -55,6 +55,6 @@ class Cache {
 	 * @return string $key Cache key name.
 	 */
 	protected static function key( $name ) {
-		return 'wis_cache_' . sanitize_key( $name );
+		return 'wis_cache_2_' . sanitize_key( $name );
 	}
 }
