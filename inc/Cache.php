@@ -20,12 +20,18 @@ class Cache {
 	 *
 	 * @access public
 	 *
-	 * @param string $string  Name of cache that is set.
-	 * @param mixed  $content Value of cache that should be set.
+	 * @param string $name       Name of cache that is set.
+	 * @param mixed  $content    Value of cache that should be set.
+	 * @param int    $expiration Optional. Time until expiration in seconds.
 	 * @return bool False if value was not set and true if value was set.
 	 */
 	public static function set( $name, $content ) {
-		return \WP_Temporary::update( self::key( $name ), $content, 5 * MINUTE_IN_SECONDS );
+		// Use expiration time if it's passed
+		if ( 3 != func_num_args() || ! $expiration = func_get_arg( 2 ) ) {
+			$expiration = 5 * MINUTE_IN_SECONDS;
+		}
+
+		return \WP_Temporary::update( self::key( $name ), $content, $expiration );
 	}
 
 	/**

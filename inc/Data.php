@@ -40,16 +40,11 @@ class Data {
 	 * @return array $items An array of radar maps items.
 	 */
 	public static function radar() {
-		// If cached, return cache
-		if ( false !== ( $items = Cache::get( __METHOD__ ) ) ) {
-			return $items;
-		}
-
 		// Prepare response
 		$items = array();
 
 		// Add RHMZ item if map is available
-		if ( $rhmz_map = Sideloader::get_instance()->rhmz_radar() ) {
+		if ( $rhmz_map = Generate::image( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz',
 				'title'   => 'Републички хидрометеоролошки завод',
@@ -59,7 +54,7 @@ class Data {
 		}
 
 		// Add DHMZ item if map is available
-		if ( $dhmz_map = Sideloader::get_instance()->dhmz_radar() ) {
+		if ( $dhmz_map = Generate::image( 'dhmz' ) ) {
 			$items[] = array(
 				'id'      => 'dhmz',
 				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
@@ -69,7 +64,7 @@ class Data {
 		}
 
 		// Add OMSZ item if map is available
-		if ( $omsz_map = Sideloader::get_instance()->omsz_radar() ) {
+		if ( $omsz_map = Generate::image( 'omsz' ) ) {
 			$items[] = array(
 				'id'      => 'omsz',
 				'title'   => 'Мађарски хидрометеоролошки завод',
@@ -77,9 +72,6 @@ class Data {
 				'caption' => '',
 			);
 		}
-
-		// Save items to cache
-		Cache::set( __METHOD__, $items );
 
 		return $items;
 	}
@@ -100,28 +92,28 @@ class Data {
 		// Prepare response
 		$items = array();
 
-		if ( $sar24_eu_map = Sideloader::get_instance()->sar24_eu_satellite() ) {
 		// Add Sat24 (Europe) item if map is available
+		if ( $sat24_eu_map = Generate::image( 'sat24-eu' ) ) {
 			$items[] = array(
-				'image'   => $sar24_eu_map,
 				'id'      => 'sat24-eu',
 				'title'   => 'Sat24',
+				'image'   => $sat24_eu_map,
 				'caption' => 'Последњи снимак целе Европе.',
 			);
 		}
 
-		if ( $sar24_it_map = Sideloader::get_instance()->sar24_it_satellite() ) {
 		// Add Sat24 (Balkan) item if map is available
+		if ( $sat24_it_map = Generate::image( 'sat24-it' ) ) {
 			$items[] = array(
-				'image'   => $sar24_it_map,
 				'id'      => 'sat24-it',
 				'title'   => 'Sat24',
+				'image'   => $sat24_it_map,
 				'caption' => 'Последњи снимак увеличан на балканско полуострво',
 			);
 		}
 
-		if ( $mmc_map = Sideloader::get_instance()->mmc_satellite() ) {
 		// Add Météo Massif item if map is available
+		if ( $mmc_map = Generate::image( 'mmc' ) ) {
 			$items[] = array(
 				'id'      => 'mmc',
 				'title'   => 'Météo Massif central',
@@ -131,7 +123,7 @@ class Data {
 		}
 
 		// Add EUMETSAT (fixed) item if map is available
-		if ( $irc_sat_map = Sideloader::get_instance()->irc_sat_satellite() ) {
+		if ( $irc_sat_map = Generate::image( 'irc-sat' ) ) {
 			$items[] = array(
 				'id'      => 'irc-sat',
 				'title'   => 'EUMETSAT',
@@ -141,7 +133,7 @@ class Data {
 		}
 
 		// Add EUMETSAT (animated) item if map is available
-		if ( $irc_anim_map = Sideloader::get_instance()->irc_anim_satellite() ) {
+		if ( $irc_anim_map = Generate::image( 'irc-anim' ) ) {
 			$items[] = array(
 				'id'      => 'irc-anim',
 				'title'   => 'EUMETSAT',
@@ -173,7 +165,7 @@ class Data {
 		$items = array();
 
 		// Add Blitzortung (Europe) item if map is available
-		if ( $blitzortung_eu_map = Sideloader::get_instance()->blitzortung_eu_lightning() ) {
+		if ( $blitzortung_eu_map = Generate::image( 'blitzortung-eu' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-eu',
 				'title'   => 'Blitzortung',
@@ -183,7 +175,7 @@ class Data {
 		}
 
 		// Add Blitzortung (Balkan) item if map is available
-		if ( $blitzortung_gr_map = Sideloader::get_instance()->blitzortung_gr_lightning() ) {
+		if ( $blitzortung_gr_map = Generate::image( 'blitzortung-gr' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-gr',
 				'title'   => 'Blitzortung',
@@ -206,21 +198,7 @@ class Data {
 	 * @return array $items An array of cities with weather data.
 	 */
 	public static function weather() {
-		// If cached, return cache
-		if ( false !== ( $items = Cache::get( __METHOD__ ) ) ) {
-			return $items;
-		}
-
-		// Get citites data from scrapper
-		$items = Scrapper::weather();
-
-		// Format cities list
-		$cities = self::get_instance()->format_weather( $items );
-
-		// Save cities to cache
-		Cache::set( __METHOD__, $cities );
-
-		return $cities;
+		return Generate::weather();
 	}
 
 	/**

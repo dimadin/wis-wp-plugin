@@ -3,271 +3,60 @@
 namespace dimadin\WIS;
 
 class Sideloader {
-	use Singleton;
-
 	/**
 	 * Current time in MySQL's timestamp data type format.
 	 *
-	 * @access protected
+	 * @access public
 	 *
 	 * @var string
 	 */
-	protected $time;
+	public $time;
 
 	/**
 	 * Type of map that is currently fetched.
 	 *
-	 * @access protected
+	 * @access public
 	 *
 	 * @var string
 	 */
-	protected $current_map_type;
+	public $map_type;
 
 	/**
 	 * Extension of map image that is currently fetched.
 	 *
-	 * @access protected
+	 * @access public
 	 *
 	 * @var string
 	 */
-	protected $current_map_image_extension;
+	public $map_image_extension;
 
 	/**
 	 * Remote URL of map image that is currently fetched.
 	 *
-	 * @access protected
+	 * @access public
 	 *
 	 * @var string
 	 */
-	protected $current_map_remote_image_url;
+	public $map_remote_image_url;
 
 	/**
 	 * Set class properties and add main methods to appropriate hooks.
 	 *
 	 * @access public
-	 */
-	public function __construct() {
-		$this->time = current_time( 'mysql' );
-	}
-
-	/**
-	 * Get radar map image from RHMZ.
-	 *
-	 * @link http://www.hidmet.gov.rs/ciril/osmotreni/radarska.php
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function rhmz_radar() {
-		$args = array(
-			'type'             => 'rhmz',
-			'extension'        => '.png',
-			'remote_image_url' => Scrapper::rhmz(),
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get radar map image from DHMZ.
-	 *
-	 * @link http://vrijeme.hr/aktpod.php?id=oradar&param=stat
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function dhmz_radar() {
-		$args = array(
-			'type'             => 'dhmz',
-			'extension'        => '.gif',
-			'remote_image_url' => 'http://vrijeme.hr/oradar.gif',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get radar map image from OMSZ.
-	 *
-	 * @link http://www.met.hu/en/idojaras/aktualis_idojaras/radar/
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function omsz_radar() {
-		$args = array(
-			'type'             => 'omsz',
-			'extension'        => '.jpg',
-			'remote_image_url' => Scrapper::omsz(),
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get satellite map image of Europe from Sar24.
-	 *
-	 * @link http://serbianmeteo.com/satelitska-slika/
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function sar24_eu_satellite() {
-		$args = array(
-			'type'             => 'sar24-eu',
-			'extension'        => '.gif',
-			'remote_image_url' => 'http://sat24.com/image.ashx?country=eu',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get satellite map image of Balkan from Sar24.
-	 *
-	 * @link http://serbianmeteo.com/satelitska-slika/
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function sar24_it_satellite() {
-		$args = array(
-			'type'             => 'sar24-it',
-			'extension'        => '.gif',
-			'remote_image_url' => 'http://sat24.com/image.ashx?country=it',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get satellite map image of Western Europe from Météo Massif central.
-	 *
-	 * @link http://serbianmeteo.com/satelitska-slika/
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function mmc_satellite() {
-		$args = array(
-			'type'             => 'mmc',
-			'extension'        => '.gif',
-			'remote_image_url' => 'http://www.meteo-mc.fr/~meteomc/Images/sat/sat_new_ireu.gif',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get satellite map image of Central Europe from EUMETSAT.
-	 *
-	 * @link http://vrijeme.hr/aktpod.php?id=irc
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function irc_sat_satellite() {
-		$args = array(
-			'type'             => 'irc-sat',
-			'extension'        => '.gif',
-			'remote_image_url' => 'http://vrijeme.hr/irc-sat.gif',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get animated satellite map image of Central Europe from EUMETSAT.
-	 *
-	 * @link http://vrijeme.hr/aktpod.php?id=irc
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function irc_anim_satellite() {
-		$args = array(
-			'type'             => 'irc-anim',
-			'extension'        => '.gif',
-			'remote_image_url' => 'http://vrijeme.hr/irc-anim.gif',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get lightning map image of Europe from Blitzortung.
-	 *
-	 * @link http://serbianmeteo.com/munje/
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function blitzortung_eu_lightning() {
-		$args = array(
-			'type'             => 'blitzortung-eu',
-			'extension'        => '.png',
-			'remote_image_url' => 'http://images.blitzortung.org/Images/image_b_eu.png?',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get lightning map image of Balkan from Blitzortung.
-	 *
-	 * @link http://serbianmeteo.com/munje/
-	 *
-	 * @access public
-	 *
-	 * @return string $map Full URL of image.
-	 */
-	public function blitzortung_gr_lightning() {
-		$args = array(
-			'type'             => 'blitzortung-gr',
-			'extension'        => '.png',
-			'remote_image_url' => 'http://images.blitzortung.org/Images/image_b_gr.png?',
-		);
-
-		return $this->get_local_current_map_image_url( $args );
-	}
-
-	/**
-	 * Get URL of local copy of current map's image.
-	 *
-	 * @access protected
 	 *
 	 * @param array $args An array of current map's data.
-	 * @return string $map URL of the local image.
 	 */
-	protected function get_local_current_map_image_url( $args ) {
+	public function __construct( $args ) {
 		// Set type, image extension, and remote URL of current map
-		$this->current_map_type             = $args['type'];
-		$this->current_map_image_extension  = $args['extension'];
-		$this->current_map_remote_image_url = $args['remote_image_url'];
+		$this->map_type             = $args['type'];
+		$this->map_image_extension  = $args['extension'];
+		$this->map_remote_image_url = $args['remote_image_url'];
 
-		// Sideload remote file to local one
-		$map = $this->sideload_image();
+		// Set current time in MySQL format
+		$this->time = current_time( 'mysql' );
 
-		// Unset type and image extension of current map
-		unset( $this->current_map_type );
-		unset( $this->current_map_image_extension );
-		unset( $this->current_map_remote_image_url );
-
-		/**
-		 * Filter local URL to allow further customization.
-		 *
-		 * @param string $url URL of the local image.
-		 */
-		return (string) apply_filters( 'wis_local_map_image_url', $map );
+		// Sideload remote to local image
+		$this->sideload_image();
 	}
 
 	/**
@@ -279,14 +68,12 @@ class Sideloader {
 	 * @todo See if commented code is needed for each type and remove.
 	 *
 	 * @access protected
-	 *
-	 * @return string $url URL of the downloaded image.
 	 */
 	protected function sideload_image() {
 		// Load file used for image retrieving
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
-		$file = $this->current_map_remote_image_url;
+		$file = $this->map_remote_image_url;
 
 		// Set variables for storage, fix file filename for query strings
 		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches );
@@ -297,7 +84,7 @@ class Sideloader {
 
 		$file_array = array();
 		//$file_array['name'] = basename( $matches[0] );
-		$file_array['name'] = basename( $this->current_map_type . $this->current_map_image_extension );
+		$file_array['name'] = basename( $this->map_type . $this->map_image_extension );
 
 		// Download file to temp location
 		$file_array['tmp_name'] = download_url( $file );
@@ -322,10 +109,9 @@ class Sideloader {
 		remove_filter( 'upload_dir', array( $this, 'change_upload_dir' ) );
 
 		// Check if URL is set
-		if ( isset( $local['error'] ) || ! isset( $local['url'] ) ) {
-			return;
-		} else {
-			return $local['url'];
+		if ( ! isset( $local['error'] ) && isset( $local['url'] ) ) {
+			// Save data about sideloaded image
+			$this->local = $local;
 		}
 	}
 
@@ -345,7 +131,7 @@ class Sideloader {
 		$name = str_replace( ' ', '-', $name );
 
 		// Add extension to base name
-		$name = $name . $this->current_map_image_extension;
+		$name = $name . $this->map_image_extension;
 
 		return $name;
 	}
@@ -363,7 +149,7 @@ class Sideloader {
 	 */
 	public function change_upload_dir( $args ) {
 		// Use current type if is avalable
-		$type = ( isset( $this->current_map_type ) && $this->current_map_type ) ? $this->current_map_type : 'global';
+		$type = ( isset( $this->map_type ) && $this->map_type ) ? $this->map_type : 'global';
 
 		// Split time to year, month, and day
 		$year  = substr( $this->time, 0, 4 );
@@ -378,6 +164,9 @@ class Sideloader {
 		$args['path']   = str_replace( $old_subdir, $new_subdir, $args['path']   );
 		$args['url']    = str_replace( $old_subdir, $new_subdir, $args['url']    );
 		$args['subdir'] = str_replace( $old_subdir, $new_subdir, $args['subdir'] );
+
+		// Save data about upload directory
+		$this->upload_dir = $args;
 
 		return $args;
 	}
