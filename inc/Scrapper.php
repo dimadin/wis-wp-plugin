@@ -88,7 +88,7 @@ class Scrapper {
 
 		// Unset HTML DOM of first page
 		unset( $dom );
-		
+
 		// Open page and get its content
 		$page_2 = wp_remote_retrieve_body( wp_remote_get( $page_2_url ) );
 

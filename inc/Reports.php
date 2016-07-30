@@ -43,7 +43,7 @@ class Reports {
 			'show_in_admin_bar'     => false,
 			'show_in_nav_menus'     => false,
 			'can_export'            => false,
-			'has_archive'           => false,		
+			'has_archive'           => false,
 			'exclude_from_search'   => true,
 			'publicly_queryable'    => false,
 			'rewrite'               => false,
