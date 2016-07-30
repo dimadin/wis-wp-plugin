@@ -100,28 +100,28 @@ class Data {
 		// Prepare response
 		$items = array();
 
-		// Add Sar24 (Europe) item if map is available
 		if ( $sar24_eu_map = Sideloader::get_instance()->sar24_eu_satellite() ) {
+		// Add Sat24 (Europe) item if map is available
 			$items[] = array(
-				'id'      => 'sar24-eu',
-				'title'   => 'Sar24',
 				'image'   => $sar24_eu_map,
+				'id'      => 'sat24-eu',
+				'title'   => 'Sat24',
 				'caption' => 'Последњи снимак целе Европе.',
 			);
 		}
 
-		// Add Sar24 (Balkan) item if map is available
 		if ( $sar24_it_map = Sideloader::get_instance()->sar24_it_satellite() ) {
+		// Add Sat24 (Balkan) item if map is available
 			$items[] = array(
-				'id'      => 'sar24-it',
-				'title'   => 'Sar24',
 				'image'   => $sar24_it_map,
+				'id'      => 'sat24-it',
+				'title'   => 'Sat24',
 				'caption' => 'Последњи снимак увеличан на балканско полуострво',
 			);
 		}
 
-		// Add Sar24 (Balkan) item if map is available
 		if ( $mmc_map = Sideloader::get_instance()->mmc_satellite() ) {
+		// Add Météo Massif item if map is available
 			$items[] = array(
 				'id'      => 'mmc',
 				'title'   => 'Météo Massif central',

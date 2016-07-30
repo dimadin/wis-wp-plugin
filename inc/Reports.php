@@ -98,7 +98,7 @@ class Reports {
 	 *
 	 * @access public
 	 *
-	 * @param arrat $args Author, place, and text of report.
+	 * @param array $args Author, place, and text of report.
 	 */
 	public static function create( $args ) {
 		$postarr = array(
