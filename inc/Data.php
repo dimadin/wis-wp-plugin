@@ -84,11 +84,6 @@ class Data {
 	 * @return array $items An array of satellite maps items.
 	 */
 	public static function satellite() {
-		// If cached, return cache
-		if ( false !== ( $items = Cache::get( __METHOD__ ) ) ) {
-			return $items;
-		}
-
 		// Prepare response
 		$items = array();
 
@@ -142,9 +137,6 @@ class Data {
 			);
 		}
 
-		// Save items to cache
-		Cache::set( __METHOD__, $items );
-
 		return $items;
 	}
 
@@ -156,11 +148,6 @@ class Data {
 	 * @return array $items An array of lightning maps items.
 	 */
 	public static function lightning() {
-		// If cached, return cache
-		if ( false !== ( $items = Cache::get( __METHOD__ ) ) ) {
-			return $items;
-		}
-
 		// Prepare response
 		$items = array();
 
@@ -183,9 +170,6 @@ class Data {
 				'caption' => 'Последњи снимак увеличан на балканско полуострво. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
-
-		// Save items to cache
-		Cache::set( __METHOD__, $items );
 
 		return $items;
 	}
