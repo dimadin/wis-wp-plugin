@@ -24,6 +24,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 add_action( 'plugins_loaded', '\dimadin\WIS\REST_API::get_instance', 10 );
 add_action( 'plugins_loaded', '\dimadin\WIS\Reports::get_instance',  10 );
 add_action( 'plugins_loaded', '\dimadin\WIS\Store::get_instance',    10 );
+add_action( 'plugins_loaded', '\dimadin\WIS\Cron::get_instance',     10 );
 
 // Clean expired temporaries
 add_action( 'wp_scheduled_delete', '\WP_Temporary::clean' );
