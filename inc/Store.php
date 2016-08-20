@@ -11,7 +11,7 @@ class Store {
 	const POST_TYPE = 'wis_store';
 
 	/**
-	 * Add main method to appropriate hook.
+	 * Add main methods to appropriate hook.
 	 *
 	 * @access public
 	 */
