@@ -99,11 +99,19 @@ class Store {
 
 		if ( $store ) {
 			$store = (object) array(
-				'id'      => $store->ID,
-				'type'    => get_post_meta( $store->ID, '_store_type',      true ),
-				'content' => get_post_meta( $store->ID, '_store_content',   true ),
-				'path'    => get_post_meta( $store->ID, '_store_file_path', true ),
-				'hash'    => get_post_meta( $store->ID, '_store_file_hash', true ),
+				'id'       => $store->ID,
+				'type'     => get_post_meta( $store->ID, '_store_type',      true ),
+				'content'  => get_post_meta( $store->ID, '_store_content',   true ),
+				'path'     => get_post_meta( $store->ID, '_store_file_path', true ),
+				'hash'     => get_post_meta( $store->ID, '_store_file_hash', true ),
+				'static'   => array(
+					'full'    => get_post_meta( $store->ID, '_store_static_full_file_path', true    ),
+					'cropped' => get_post_meta( $store->ID, '_store_static_cropped_file_path', true ),
+				),
+				'animated' => array(
+					'full'    => get_post_meta( $store->ID, '_store_animated_full_file_path', true    ),
+					'cropped' => get_post_meta( $store->ID, '_store_animated_cropped_file_path', true ),
+				),
 			);
 		}
 
