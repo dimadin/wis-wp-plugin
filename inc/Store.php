@@ -131,9 +131,11 @@ class Store {
 			'post_status' => 'publish',
 		);
 
+		// Create post with main data
 		$store_id = wp_insert_post( $postarr );
 
-		if ( ! is_wp_error( $store_id ) ) {
+		// If main post is created, add meta values
+		if ( $store_id ) {
 			update_post_meta( $store_id, '_store_type',      $r['type']    );
 			update_post_meta( $store_id, '_store_content',   $r['content'] );
 			update_post_meta( $store_id, '_store_file_path', $r['path']    );
