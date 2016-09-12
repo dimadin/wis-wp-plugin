@@ -114,6 +114,7 @@ class Store {
 	 * @access public
 	 *
 	 * @param array $args An array of arguments that make store.
+	 * @return int $store_id The store ID on success. The value 0.
 	 */
 	public static function create( $args ) {
 		// Set default arguments
@@ -141,6 +142,8 @@ class Store {
 			update_post_meta( $store_id, '_store_file_path', $r['path']    );
 			update_post_meta( $store_id, '_store_file_hash', $r['hash']    );
 		}
+
+		return $store_id;
 	}
 
 	/**
