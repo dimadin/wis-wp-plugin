@@ -44,31 +44,31 @@ class Data {
 		$items = array();
 
 		// Add RHMZ item if map is available
-		if ( $rhmz_map = Generate::image( 'rhmz' ) ) {
+		if ( $rhmz = Generate::image( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz',
 				'title'   => 'Републички хидрометеоролошки завод',
-				'image'   => $rhmz_map,
+				'image'   => Generate::image_url( $rhmz->path ),
 				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
 
 		// Add DHMZ item if map is available
-		if ( $dhmz_map = Generate::image( 'dhmz' ) ) {
+		if ( $dhmz = Generate::image( 'dhmz' ) ) {
 			$items[] = array(
 				'id'      => 'dhmz',
 				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
-				'image'   => $dhmz_map,
+				'image'   => Generate::image_url( $dhmz->path ),
 				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
 
 		// Add OMSZ item if map is available
-		if ( $omsz_map = Generate::image( 'omsz' ) ) {
+		if ( $omsz = Generate::image( 'omsz' ) ) {
 			$items[] = array(
 				'id'      => 'omsz',
 				'title'   => 'Мађарски хидрометеоролошки завод',
-				'image'   => $omsz_map,
+				'image'   => Generate::image_url( $omsz->path ),
 				'caption' => '',
 			);
 		}
@@ -88,51 +88,51 @@ class Data {
 		$items = array();
 
 		// Add Sat24 (Europe) item if map is available
-		if ( $sat24_eu_map = Generate::image( 'sat24-eu' ) ) {
+		if ( $sat24_eu = Generate::image( 'sat24-eu' ) ) {
 			$items[] = array(
 				'id'      => 'sat24-eu',
 				'title'   => 'Sat24',
-				'image'   => $sat24_eu_map,
+				'image'   => Generate::image_url( $sat24_eu->path ),
 				'caption' => 'Последњи снимак целе Европе.',
 			);
 		}
 
 		// Add Sat24 (Balkan) item if map is available
-		if ( $sat24_it_map = Generate::image( 'sat24-it' ) ) {
+		if ( $sat24_it = Generate::image( 'sat24-it' ) ) {
 			$items[] = array(
 				'id'      => 'sat24-it',
 				'title'   => 'Sat24',
-				'image'   => $sat24_it_map,
+				'image'   => Generate::image_url( $sat24_it->path ),
 				'caption' => 'Последњи снимак увеличан на балканско полуострво',
 			);
 		}
 
 		// Add Météo Massif item if map is available
-		if ( $mmc_map = Generate::image( 'mmc' ) ) {
+		if ( $mmc = Generate::image( 'mmc' ) ) {
 			$items[] = array(
 				'id'      => 'mmc',
 				'title'   => 'Météo Massif central',
-				'image'   => $mmc_map,
+				'image'   => Generate::image_url( $mmc->path ),
 				'caption' => 'Снимци последња два сата увеличани на западну Европу',
 			);
 		}
 
 		// Add EUMETSAT (fixed) item if map is available
-		if ( $irc_sat_map = Generate::image( 'irc-sat' ) ) {
+		if ( $irc_sat = Generate::image( 'irc-sat' ) ) {
 			$items[] = array(
 				'id'      => 'irc-sat',
 				'title'   => 'EUMETSAT',
-				'image'   => $irc_sat_map,
+				'image'   => Generate::image_url( $irc_sat->path ),
 				'caption' => 'Последњи снимак централне Европе',
 			);
 		}
 
 		// Add EUMETSAT (animated) item if map is available
-		if ( $irc_anim_map = Generate::image( 'irc-anim' ) ) {
+		if ( $irc_anim = Generate::image( 'irc-anim' ) ) {
 			$items[] = array(
 				'id'      => 'irc-anim',
 				'title'   => 'EUMETSAT',
-				'image'   => $irc_anim_map,
+				'image'   => Generate::image_url( $irc_anim->path ),
 				'caption' => 'Снимци последњих пет сати централне Европе',
 			);
 		}
@@ -152,21 +152,21 @@ class Data {
 		$items = array();
 
 		// Add Blitzortung (Europe) item if map is available
-		if ( $blitzortung_eu_map = Generate::image( 'blitzortung-eu' ) ) {
+		if ( $blitzortung_eu = Generate::image( 'blitzortung-eu' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-eu',
 				'title'   => 'Blitzortung',
-				'image'   => $blitzortung_eu_map,
+				'image'   => Generate::image_url( $blitzortung_eu->path ),
 				'caption' => 'Последњи снимак целе Европе. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
 
 		// Add Blitzortung (Balkan) item if map is available
-		if ( $blitzortung_gr_map = Generate::image( 'blitzortung-gr' ) ) {
+		if ( $blitzortung_gr = Generate::image( 'blitzortung-gr' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-gr',
 				'title'   => 'Blitzortung',
-				'image'   => $blitzortung_gr_map,
+				'image'   => Generate::image_url( $blitzortung_gr->path ),
 				'caption' => 'Последњи снимак увеличан на балканско полуострво. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}

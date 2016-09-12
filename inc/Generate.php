@@ -13,7 +13,8 @@ class Generate {
 	 *
 	 * @access public
 	 *
-	 * @return string $map Full URL of image.
+	 * @return object|null $latest An object with store data. If there is failure
+	 *                             with creating or getting new store, return null.
 	 */
 	public static function image( $type ) {
 		// If cached, return cache
@@ -30,8 +31,11 @@ class Generate {
 		// Get hash of local image
 		$hash = md5_file( $data->local['file'] );
 
+		// Get latest store
+		$latest = Store::latest( $type );
+
 		// Use new file if its different than old one
-		if ( Store::latest( $type )->hash != $hash ) {
+		if ( $latest->hash != $hash ) {
 			// Prepare arguments for new store post
 			$args = array(
 				'type' => $type,
@@ -39,11 +43,8 @@ class Generate {
 				'hash' => $hash,
 			);
 
-			// Save a new store post
-			Store::create( $args );
-
-			// Get new URL
-			$url = $data->local['url'];
+			// Save a new store post and get it's object
+			$latest = Store::get( Store::create( $args ) );
 
 			// Cache expiration
 			$expiration = $type_args['expire_new'];
@@ -51,17 +52,16 @@ class Generate {
 			// Delete sideloaded image
 			unlink( $data->local['file'] );
 
-			// Prepare full URL
-			$url = self::image_url( Store::latest( $type )->path );
-
 			// Cache expiration
 			$expiration = $type_args['expire_old'];
 		}
 
-		// Save image URL to cache
-		Cache::set( $type, $url, $expiration );
+		// Save latest store to cache
+		if ( $latest ) {
+			Cache::set( $type, $latest, $expiration );
+		}
 
-		return $url;
+		return $latest;
 	}
 
 	/**
