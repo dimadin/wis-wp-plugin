@@ -56,12 +56,6 @@ class Store {
 	 * @return object|bool $store An object with latest store data. Default false.
 	 */
 	public static function latest( $type ) {
-		static $cache = array();
-
-		if ( ! empty( $cache[ $type ] ) ) {
-			return $cache[ $type ];
-		}
-
 		$args = array(
 			'post_type'      => self::POST_TYPE,
 			'posts_per_page' => 1,
@@ -76,11 +70,7 @@ class Store {
 		$stores = get_posts( $args );
 
 		if ( $stores ) {
-			$store = self::get( $stores[0] );
-
-			$cache[ $type ] = $store;
-
-			return $store;
+			return self::get( $stores[0] );
 		}
 
 		return false;
