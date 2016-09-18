@@ -6,7 +6,7 @@
  * Description: REST API, scrapping, sideloading, reporting and more for current Serbian weather.
  * Author:      Milan Dinić
  * Author URI:  http://blog.milandinic.com/
- * Version:     2.0-beta-1
+ * Version:     2.0-beta-2
  * License:     GPL
  */
 
