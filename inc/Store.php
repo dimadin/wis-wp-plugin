@@ -227,6 +227,9 @@ class Store {
 				if ( $static = $store->static['full'] ) {
 					@unlink( Generate::image_path( $static ) );
 				}
+				if ( $animated = $store->animated['full'] ) {
+					@unlink( Generate::image_path( $animated ) );
+				}
 
 				// Trash post
 				wp_trash_post( $store->id );
