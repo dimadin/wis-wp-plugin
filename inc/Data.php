@@ -103,7 +103,7 @@ class Data {
 				'id'      => 'sat24-it',
 				'title'   => 'Sat24',
 				'image'   => Generate::image_url( $sat24_it->static['full'] ),
-				'caption' => 'Последњи снимак увеличан на балканско полуострво',
+				'caption' => 'Последњи снимак увеличан на бившу Југославију,',
 			);
 		}
 
@@ -113,7 +113,7 @@ class Data {
 				'id'      => 'mmc',
 				'title'   => 'Météo Massif central',
 				'image'   => Generate::image_url( $mmc->static['full'] ),
-				'caption' => 'Снимци последња два сата увеличани на западну Европу',
+				'caption' => 'Последњи снимак увеличан на западну Европу.',
 			);
 		}
 
@@ -123,7 +123,7 @@ class Data {
 				'id'      => 'irc-sat',
 				'title'   => 'EUMETSAT',
 				'image'   => Generate::image_url( $irc_sat->static['full'] ),
-				'caption' => 'Последњи снимак централне Европе',
+				'caption' => 'Последњи снимак целе Европе.',
 			);
 		}
 
