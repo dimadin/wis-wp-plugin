@@ -47,6 +47,9 @@ class Sideloader {
 	 * @param array $args An array of current map's data.
 	 */
 	public function __construct( $args ) {
+		// Add arguments to object
+		$this->args = $args;
+
 		// Set type, image extension, and remote URL of current map
 		$this->map_type             = $args['type'];
 		$this->map_image_extension  = $args['extension'];
@@ -112,6 +115,12 @@ class Sideloader {
 		if ( ! isset( $local['error'] ) && isset( $local['url'] ) ) {
 			// Save data about sideloaded image
 			$this->local = $local;
+
+			// Save directory path relative to base uploads directory
+			$this->subpath = ltrim( $this->upload_dir['subdir'], '/' ) . '/';
+
+			// Save information about a sideloaded file path
+			$this->pathinfo = pathinfo( $local['file'] );
 		}
 	}
 
