@@ -92,7 +92,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'sat24-eu',
 				'title'   => 'Sat24',
-				'image'   => Generate::image_url( $sat24_eu->path ),
+				'image'   => Generate::image_url( $sat24_eu->static['full'] ),
 				'caption' => 'Последњи снимак целе Европе.',
 			);
 		}
@@ -102,7 +102,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'sat24-it',
 				'title'   => 'Sat24',
-				'image'   => Generate::image_url( $sat24_it->path ),
+				'image'   => Generate::image_url( $sat24_it->static['full'] ),
 				'caption' => 'Последњи снимак увеличан на балканско полуострво',
 			);
 		}
@@ -112,7 +112,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'mmc',
 				'title'   => 'Météo Massif central',
-				'image'   => Generate::image_url( $mmc->path ),
+				'image'   => Generate::image_url( $mmc->static['full'] ),
 				'caption' => 'Снимци последња два сата увеличани на западну Европу',
 			);
 		}
@@ -122,18 +122,8 @@ class Data {
 			$items[] = array(
 				'id'      => 'irc-sat',
 				'title'   => 'EUMETSAT',
-				'image'   => Generate::image_url( $irc_sat->path ),
+				'image'   => Generate::image_url( $irc_sat->static['full'] ),
 				'caption' => 'Последњи снимак централне Европе',
-			);
-		}
-
-		// Add EUMETSAT (animated) item if map is available
-		if ( $irc_anim = Generate::image( 'irc-anim' ) ) {
-			$items[] = array(
-				'id'      => 'irc-anim',
-				'title'   => 'EUMETSAT',
-				'image'   => Generate::image_url( $irc_anim->path ),
-				'caption' => 'Снимци последњих пет сати централне Европе',
 			);
 		}
 

@@ -50,13 +50,6 @@ class Maps {
 			'expire_new'       => 20,
 			'expire_old'       => 5,
 		),
-		// http://vrijeme.hr/aktpod.php?id=irc
-		'irc-anim' => array(
-			'extension'        => '.gif',
-			'remote_image_url' => 'http://vrijeme.hr/irc-anim.gif',
-			'expire_new'       => 20,
-			'expire_old'       => 5,
-		),
 		// http://serbianmeteo.com/munje/
 		'blitzortung-eu' => array(
 			'extension'        => '.png',
