@@ -29,16 +29,19 @@ class Maps {
 		'sat24-eu' => array(
 			'extension'        => '.gif',
 			'remote_image_url' => 'http://sat24.com/image.ashx?country=eu',
+			'motion'           => 'mixed',
 		),
 		// http://serbianmeteo.com/satelitska-slika/
 		'sat24-it' => array(
 			'extension'        => '.gif',
 			'remote_image_url' => 'http://sat24.com/image.ashx?country=it',
+			'motion'           => 'mixed',
 		),
 		// http://serbianmeteo.com/satelitska-slika/
 		'mmc' => array(
 			'extension'        => '.gif',
 			'remote_image_url' => 'http://www.meteo-mc.fr/~meteomc/Images/sat/sat_new_ireu.gif',
+			'motion'           => 'mixed',
 		),
 		// http://vrijeme.hr/aktpod.php?id=irc
 		'irc-sat' => array(
@@ -104,6 +107,11 @@ class Maps {
 			$value['expire_old'] = MINUTE_IN_SECONDS;
 		} else {
 			$value['expire_old'] = $value['expire_old'] * MINUTE_IN_SECONDS;
+		}
+
+		// If image has no mixed motion, it's static
+		if ( ! isset( $value['motion'] ) ) {
+			$value['motion'] = 'static';
 		}
 
 		return $value;
