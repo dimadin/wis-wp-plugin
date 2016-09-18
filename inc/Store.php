@@ -161,11 +161,12 @@ class Store {
 	public static function create( $args ) {
 		// Set default arguments
 		$defaults = array(
-			'type'    => '',
-			'content' => '',
-			'path'    => '',
-			'static'  => '',
-			'hash'    =>'',
+			'type'     => '',
+			'content'  => '',
+			'path'     => '',
+			'static'   => '',
+			'animated' => '',
+			'hash'     =>'',
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -180,11 +181,12 @@ class Store {
 
 		// If main post is created, add meta values
 		if ( $store_id ) {
-			update_post_meta( $store_id, '_store_type',                  $r['type']    );
-			update_post_meta( $store_id, '_store_content',               $r['content'] );
-			update_post_meta( $store_id, '_store_file_path',             $r['path']    );
-			update_post_meta( $store_id, '_store_file_hash',             $r['hash']    );
-			update_post_meta( $store_id, '_store_static_full_file_path', $r['static']  );
+			update_post_meta( $store_id, '_store_type',                    $r['type']     );
+			update_post_meta( $store_id, '_store_content',                 $r['content']  );
+			update_post_meta( $store_id, '_store_file_path',               $r['path']     );
+			update_post_meta( $store_id, '_store_file_hash',               $r['hash']     );
+			update_post_meta( $store_id, '_store_static_full_file_path',   $r['static']   );
+			update_post_meta( $store_id, '_store_animated_full_file_path', $r['animated'] );
 		}
 
 		return $store_id;

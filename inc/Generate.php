@@ -44,10 +44,11 @@ class Generate {
 
 			// Prepare arguments for new store post
 			$args = array(
-				'type'   => $type,
-				'path'   => $data->subpath . $data->pathinfo['basename'],
-				'static' => $data->subpath . $data->static_basename,
-				'hash'   => $hash,
+				'type'     => $type,
+				'path'     => $data->subpath . $data->pathinfo['basename'],
+				'static'   => $data->subpath . $data->static_basename,
+				'animated' => $data->subpath . $data->animated_basename,
+				'hash'     => $hash,
 			);
 
 			// Save a new store post and get it's object
