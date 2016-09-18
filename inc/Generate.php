@@ -120,6 +120,8 @@ class Generate {
 	/**
 	 * Add and generate if neccessary static image to sideloder object
 	 *
+	 * @link https://stackoverflow.com/a/15640297
+	 *
 	 * @param \dimadin\WIS\Sideloader $data Object of sideloaded image.
 	 */
 	public static function staticize( $data ) {
