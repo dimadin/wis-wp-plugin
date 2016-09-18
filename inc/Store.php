@@ -122,6 +122,7 @@ class Store {
 			'type'    => '',
 			'content' => '',
 			'path'    => '',
+			'static'  => '',
 			'hash'    =>'',
 		);
 
@@ -137,10 +138,11 @@ class Store {
 
 		// If main post is created, add meta values
 		if ( $store_id ) {
-			update_post_meta( $store_id, '_store_type',      $r['type']    );
-			update_post_meta( $store_id, '_store_content',   $r['content'] );
-			update_post_meta( $store_id, '_store_file_path', $r['path']    );
-			update_post_meta( $store_id, '_store_file_hash', $r['hash']    );
+			update_post_meta( $store_id, '_store_type',                  $r['type']    );
+			update_post_meta( $store_id, '_store_content',               $r['content'] );
+			update_post_meta( $store_id, '_store_file_path',             $r['path']    );
+			update_post_meta( $store_id, '_store_file_hash',             $r['hash']    );
+			update_post_meta( $store_id, '_store_static_full_file_path', $r['static']  );
 		}
 
 		return $store_id;

@@ -41,9 +41,10 @@ class Generate {
 
 			// Prepare arguments for new store post
 			$args = array(
-				'type' => $type,
-				'path' => ltrim( $data->upload_dir['subdir'], '/' ) . '/' . pathinfo( $data->local['file'], PATHINFO_BASENAME ),
-				'hash' => $hash,
+				'type'   => $type,
+				'path'   => $data->subpath . $data->pathinfo['basename'],
+				'static' => $data->subpath . $data->static_basename,
+				'hash'   => $hash,
 			);
 
 			// Save a new store post and get it's object
