@@ -39,6 +39,9 @@ class Generate {
 			// Generate static image
 			self::staticize( $data );
 
+			// Generate animated image
+			self::animate( $data );
+
 			// Prepare arguments for new store post
 			$args = array(
 				'type'   => $type,
@@ -139,6 +142,52 @@ class Generate {
 			// Otherwise static image is the same as base image
 			$data->static_basename = $data->pathinfo['basename'];
 		}
+	}
+
+	/**
+	 * Generate animated image to sideloder object
+	 *
+	 * @link https://stackoverflow.com/questions/13997518/php-imagick-create-gif-animation
+	 * @link https://stackoverflow.com/questions/9417762/make-an-animated-gif-with-phps-imagemagick-api
+	 *
+	 * @param \dimadin\WIS\Sideloader $data Object of sideloaded image.
+	 */
+	public static function animate( $data ) {
+		// Create a new ImageMagick object
+		$animation = new \Imagick();
+
+		// Set GIF as a format of object
+		$animation->setFormat( 'GIF' );
+
+		// By default there are no static images
+		$statics = [];
+
+		// Loop through all latest stores of type to get static image
+		foreach ( array_reverse( Store::latests( $data->args['type'] ) ) as $store ) {
+				$statics[] = self::image_path( $store->static['full'] );
+		}
+
+		// Add current sideloaded static image
+		$statics[] = $data->pathinfo['dirname'] . '/' . $data->static_basename;
+
+		// Loop through all static images
+		foreach ( $statics as $static ) {
+			try {
+				// Create new frame from static image
+				$frame = new \Imagick( $static );
+
+				// Add frame to animation
+				$animation->addImage( $frame );
+				$animation->setImageDelay( 40 );
+				$animation->nextImage();
+			} catch ( \Exception $e) {}
+		}
+
+		// Save animated file name
+		$data->animated_basename = $data->pathinfo['filename'] . '-animated.gif';
+
+		// Save animation image file
+		$animation->writeImages( $data->pathinfo['dirname'] . '/' . $data->animated_basename, true );
 	}
 
 	/**
