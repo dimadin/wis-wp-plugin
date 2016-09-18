@@ -180,6 +180,9 @@ class Store {
 				if ( $path = $store->path ) {
 					@unlink( Generate::image_path( $path ) );
 				}
+				if ( $static = $store->static['full'] ) {
+					@unlink( Generate::image_path( $static ) );
+				}
 
 				// Trash post
 				wp_trash_post( $store->id );
