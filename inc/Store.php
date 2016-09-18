@@ -176,7 +176,7 @@ class Store {
 
 				// Delete files
 				if ( $path = $store->path ) {
-					unlink( Generate::image_path( $path ) );
+					@unlink( Generate::image_path( $path ) );
 				}
 
 				// Trash post
