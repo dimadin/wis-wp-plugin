@@ -77,6 +77,48 @@ class Store {
 	}
 
 	/**
+	 * Get latests stores.
+	 *
+	 * @access public
+	 *
+	 * @param string $type Map type to retrieve store for.
+	 * @return array $items An array with objects of latest stores.
+	 *                      Default empty array.
+	 */
+	public static function latests( $type ) {
+		// Prepare response
+		$items = array();
+
+		// Get stores before last two days
+		$args = array(
+			'post_type'      => self::POST_TYPE,
+			'posts_per_page' => -1,
+			'meta_query'     => array(
+				array(
+					'key'   => '_store_type',
+					'value' => $type,
+				),
+			),
+			'date_query'     => array(
+				array(
+					'column' => 'post_modified',
+					'after'  => '2 hours ago',
+				),
+			),
+		);
+
+		$stores = get_posts( $args );
+
+		if ( $stores ) {
+			foreach ( $stores as $store_post ) {
+				// Format store object
+				$items[] = self::get( $store_post );
+			}
+		}
+
+		return $items;
+	}
+	/**
 	 * Get store object.
 	 *
 	 * @access public
