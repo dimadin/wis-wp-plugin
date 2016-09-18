@@ -165,6 +165,110 @@ class Data {
 	}
 
 	/**
+	 * Get animated maps items.
+	 *
+	 * @access public
+	 *
+	 * @return array $items An array of animated maps items.
+	 */
+	public static function animated() {
+		// Prepare response
+		$items = array();
+
+		// Add RHMZ item if map is available
+		if ( $rhmz = Generate::image( 'rhmz' ) ) {
+			$items[] = array(
+				'id'      => 'rhmz-animated',
+				'title'   => 'Републички хидрометеоролошки завод',
+				'image'   => Generate::image_url( $rhmz->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака Србије. Време на слици је UTC (Universal Coordinated Time).',
+			);
+		}
+
+		// Add DHMZ item if map is available
+		if ( $dhmz = Generate::image( 'dhmz' ) ) {
+			$items[] = array(
+				'id'      => 'dhmz-animated',
+				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
+				'image'   => Generate::image_url( $dhmz->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака источне Хрватске. Време на слици је UTC (Universal Coordinated Time).',
+			);
+		}
+
+		// Add OMSZ item if map is available
+		if ( $omsz = Generate::image( 'omsz' ) ) {
+			$items[] = array(
+				'id'      => 'omsz-animated',
+				'title'   => 'Мађарски хидрометеоролошки завод',
+				'image'   => Generate::image_url( $omsz->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака Мађарске.',
+			);
+		}
+
+		// Add Sat24 (Europe) item if map is available
+		if ( $sat24_eu = Generate::image( 'sat24-eu' ) ) {
+			$items[] = array(
+				'id'      => 'sat24-eu-animated',
+				'title'   => 'Sat24',
+				'image'   => Generate::image_url( $sat24_eu->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака целе Европе.',
+			);
+		}
+
+		// Add Sat24 (Balkan) item if map is available
+		if ( $sat24_it = Generate::image( 'sat24-it' ) ) {
+			$items[] = array(
+				'id'      => 'sat24-it-animated',
+				'title'   => 'Sat24',
+				'image'   => Generate::image_url( $sat24_it->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака увеличаних на бившу Југославију.',
+			);
+		}
+
+		// Add Météo Massif item if map is available
+		if ( $mmc = Generate::image( 'mmc' ) ) {
+			$items[] = array(
+				'id'      => 'mmc-animated',
+				'title'   => 'Météo Massif central',
+				'image'   => Generate::image_url( $mmc->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака увеличаних на западну Европу.',
+			);
+		}
+
+		// Add EUMETSAT (fixed) item if map is available
+		if ( $irc_sat = Generate::image( 'irc-sat' ) ) {
+			$items[] = array(
+				'id'      => 'irc-sat-animated',
+				'title'   => 'EUMETSAT',
+				'image'   => Generate::image_url( $irc_sat->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака целе Европе.',
+			);
+		}
+
+		// Add Blitzortung (Europe) item if map is available
+		if ( $blitzortung_eu = Generate::image( 'blitzortung-eu' ) ) {
+			$items[] = array(
+				'id'      => 'blitzortung-eu-animated',
+				'title'   => 'Blitzortung',
+				'image'   => Generate::image_url( $blitzortung_eu->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака целе Европе. Време на слици је UTC (Universal Coordinated Time).',
+			);
+		}
+
+		// Add Blitzortung (Balkan) item if map is available
+		if ( $blitzortung_gr = Generate::image( 'blitzortung-gr' ) ) {
+			$items[] = array(
+				'id'      => 'blitzortung-gr-animated',
+				'title'   => 'Blitzortung',
+				'image'   => Generate::image_url( $blitzortung_gr->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака увеличаних на балканско полуострво. Време на слици је UTC (Universal Coordinated Time).',
+			);
+		}
+
+		return $items;
+	}
+
+	/**
 	 * Get weather cities list items.
 	 *
 	 * @access public

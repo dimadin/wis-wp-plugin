@@ -58,6 +58,12 @@ class REST_API {
 			'methods'  => \WP_REST_Server::READABLE,
 		) );
 
+		// Register route for animated maps
+		register_rest_route( 'wis/v2', '/animated', array(
+			'callback' => array( $this, 'animated' ),
+			'methods'  => \WP_REST_Server::READABLE,
+		) );
+
 		// Register route for weather list
 		register_rest_route( 'wis/v1', '/weather', array(
 			'callback' => array( $this, 'weather' ),
@@ -166,6 +172,28 @@ class REST_API {
 			'id'         => 'lightning-maps',
 			'type'       => 'thumbnails',
 			'thumbnails' => Optimizer::optimize( Data::lightning() ),
+		);
+
+		$response = new \WP_REST_Response( $data );
+
+		return $response;
+	}
+
+	/**
+	 * Get REST response for animated maps.
+	 *
+	 * @access public
+	 *
+	 * @param WP_REST_Request $request Current request.
+	 * @return WP_REST_Response $response Response for /animated endpoint.
+	 */
+	public function animated( \WP_REST_Request $request ) {
+		// Prepare response with meta data and an array of animated maps items
+		$data = array(
+			'name'       => 'Анимације',
+			'id'         => 'animated-maps',
+			'type'       => 'thumbnails',
+			'thumbnails' => Optimizer::optimize( Data::animated() ),
 		);
 
 		$response = new \WP_REST_Response( $data );
