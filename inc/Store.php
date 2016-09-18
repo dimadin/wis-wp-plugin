@@ -53,7 +53,8 @@ class Store {
 	 *
 	 * @access public
 	 *
-	 * @return object|bool $store An object with latest store data. Default false.
+	 * @param string $type Map type to retrieve store for.
+	 * @return object|bool $store An object of latest store. Default false.
 	 */
 	public static function latest( $type ) {
 		$args = array(
