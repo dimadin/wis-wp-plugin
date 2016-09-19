@@ -22,6 +22,17 @@ class Generate {
 			return $data;
 		}
 
+		// By default no image generation occured in this process
+		static $generated = false;
+
+		// Get latest store
+		$latest = Store::latest( $type );
+
+		// If image generation occured in this process return latest store
+		if ( $generated ) {
+			return $latest;
+		}
+
 		// Get data about map type
 		$type_args = Maps::get( $type );
 
@@ -31,8 +42,8 @@ class Generate {
 		// Get hash of local image
 		$hash = md5_file( $data->local['file'] );
 
-		// Get latest store
-		$latest = Store::latest( $type );
+			// Store that image generation occured in this process
+			$generated = true;
 
 		// Use new file if its different than old one
 		if ( $latest->hash != $hash ) {
