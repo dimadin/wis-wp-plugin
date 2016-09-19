@@ -24,7 +24,6 @@ class Optimizer {
 
 		// Add width and strip all extraneous data
 		$args = array(
-			'w'     => $_GET['width'],
 			'strip' => 'all',
 		);
 
