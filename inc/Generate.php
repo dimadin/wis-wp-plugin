@@ -18,8 +18,8 @@ class Generate {
 	 */
 	public static function image( $type ) {
 		// If cached, return cache
-		if ( false !== ( $url = Cache::get( $type ) ) ) {
-			return $url;
+		if ( false !== ( $data = Cache::get( $type ) ) ) {
+			return $data;
 		}
 
 		// Get data about map type
