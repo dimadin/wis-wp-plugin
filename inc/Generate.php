@@ -69,7 +69,7 @@ class Generate {
 			$expiration = $type_args['expire_new'];
 		} else {
 			// Delete sideloaded image
-			unlink( $data->local['file'] );
+			@unlink( $data->local['file'] );
 
 			// Cache expiration
 			$expiration = $type_args['expire_old'];
