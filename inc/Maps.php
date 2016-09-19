@@ -14,38 +14,45 @@ class Maps {
 		// http://www.hidmet.gov.rs/ciril/osmotreni/radarska.php
 		'rhmz' => array(
 			'extension'        => '.png',
+			'static'           => 'jpg',
 		),
 		// http://vrijeme.hr/aktpod.php?id=oradar&param=stat
 		'dhmz' => array(
 			'extension'        => '.gif',
+			'static'           => 'png',
 			'remote_image_url' => 'http://vrijeme.hr/oradar.gif',
 		),
 		// http://www.met.hu/en/idojaras/aktualis_idojaras/radar/
 		'omsz' => array(
 			'extension'        => '.jpg',
+			'static'           => 'jpg',
 			'expire_new'       => 10,
 		),
 		// http://serbianmeteo.com/satelitska-slika/
 		'sat24-eu' => array(
 			'extension'        => '.gif',
+			'static'           => 'jpg',
 			'remote_image_url' => 'http://sat24.com/image.ashx?country=eu',
 			'motion'           => 'mixed',
 		),
 		// http://serbianmeteo.com/satelitska-slika/
 		'sat24-it' => array(
 			'extension'        => '.gif',
+			'static'           => 'jpg',
 			'remote_image_url' => 'http://sat24.com/image.ashx?country=it',
 			'motion'           => 'mixed',
 		),
 		// http://serbianmeteo.com/satelitska-slika/
 		'mmc' => array(
 			'extension'        => '.gif',
+			'static'           => 'jpg',
 			'remote_image_url' => 'http://www.meteo-mc.fr/~meteomc/Images/sat/sat_new_ireu.gif',
 			'motion'           => 'mixed',
 		),
 		// http://vrijeme.hr/aktpod.php?id=irc
 		'irc-sat' => array(
 			'extension'        => '.gif',
+			'static'           => 'jpg',
 			'remote_image_url' => 'http://vrijeme.hr/irc-sat.gif',
 			'expire_new'       => 20,
 			'expire_old'       => 5,
@@ -53,12 +60,14 @@ class Maps {
 		// http://serbianmeteo.com/munje/
 		'blitzortung-eu' => array(
 			'extension'        => '.png',
+			'static'           => 'png',
 			'remote_image_url' => 'http://images.blitzortung.org/Images/image_b_eu.png?',
 			'expire_new'       => 15,
 		),
 		// http://serbianmeteo.com/munje/
 		'blitzortung-gr' => array(
 			'extension'        => '.png',
+			'static'           => 'png',
 			'remote_image_url' => 'http://images.blitzortung.org/Images/image_b_gr.png?',
 			'expire_new'       => 15,
 		),

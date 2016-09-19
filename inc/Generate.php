@@ -136,25 +136,31 @@ class Generate {
 	 * @param \dimadin\WIS\Sideloader $data Object of sideloaded image.
 	 */
 	public static function staticize( $data ) {
+		// Save static file name
+		$data->static_basename = $data->pathinfo['filename'] . '-static.' . $data->args['static'];
+
+		// Open image with ImageMagick
+		$image = new \Imagick( $data->local['file'] );
+
 		// If image is of mixed motion, generate static image
 		if ( 'mixed' == $data->args['motion'] ) {
-			// Open image with ImageMagick
-			$image = new \Imagick( $data->local['file'] );
-
 			// Get all frames of the image
 			$frames = $image->coalesceImages();
 
 			// Get last frame; requires empty looping
 			foreach ( $frames as $frame ) {};
 
-			// Save static file name
-			$data->static_basename = $data->pathinfo['filename'] . '-static.' . $data->pathinfo['extension'];
+			// Set image file format
+			$frame->setFormat( $data->args['static'] );
 
 			// Save static image from the last frame
 			$frame->writeImage( $data->pathinfo['dirname'] . '/' . $data->static_basename );
 		} else {
-			// Otherwise static image is the same as base image
-			$data->static_basename = $data->pathinfo['basename'];
+			// Set image file format
+			$image->setFormat( $data->args['static'] );
+
+			// Save static image from the last frame
+			$image->writeImage( $data->pathinfo['dirname'] . '/' . $data->static_basename );
 		}
 	}
 
