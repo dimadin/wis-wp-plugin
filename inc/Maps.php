@@ -54,13 +54,13 @@ class Maps {
 		'blitzortung-eu' => array(
 			'extension'        => '.png',
 			'remote_image_url' => 'http://images.blitzortung.org/Images/image_b_eu.png?',
-			'expire_new'       => 5,
+			'expire_new'       => 15,
 		),
 		// http://serbianmeteo.com/munje/
 		'blitzortung-gr' => array(
 			'extension'        => '.png',
 			'remote_image_url' => 'http://images.blitzortung.org/Images/image_b_gr.png?',
-			'expire_new'       => 5,
+			'expire_new'       => 15,
 		),
 	);
 
