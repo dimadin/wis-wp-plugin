@@ -42,11 +42,11 @@ class Generate {
 		// Get hash of local image
 		$hash = md5_file( $data->local['file'] );
 
+		// Use new file if there is no latest store or if new file is different than old one
+		if ( ! $latest || $latest->hash != $hash ) {
 			// Store that image generation occured in this process
 			$generated = true;
 
-		// Use new file if its different than old one
-		if ( $latest->hash != $hash ) {
 			// Generate static image
 			self::staticize( $data );
 
