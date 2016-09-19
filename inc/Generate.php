@@ -198,7 +198,7 @@ class Generate {
 
 				// Add frame to animation
 				$animation->addImage( $frame );
-				$animation->setImageDelay( 40 );
+				$animation->setImageDelay( 50 );
 				$animation->nextImage();
 			} catch ( \Exception $e) {}
 		}
