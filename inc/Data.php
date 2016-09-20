@@ -48,7 +48,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'rhmz',
 				'title'   => 'Републички хидрометеоролошки завод',
-				'image'   => Generate::image_url( $rhmz->path ),
+				'image'   => Generate::image_url( $rhmz->static['full'] ),
 				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
@@ -58,7 +58,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'dhmz',
 				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
-				'image'   => Generate::image_url( $dhmz->path ),
+				'image'   => Generate::image_url( $dhmz->static['full'] ),
 				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
@@ -68,7 +68,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'omsz',
 				'title'   => 'Мађарски хидрометеоролошки завод',
-				'image'   => Generate::image_url( $omsz->path ),
+				'image'   => Generate::image_url( $omsz->static['full'] ),
 				'caption' => '',
 			);
 		}
@@ -146,7 +146,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'blitzortung-eu',
 				'title'   => 'Blitzortung',
-				'image'   => Generate::image_url( $blitzortung_eu->path ),
+				'image'   => Generate::image_url( $blitzortung_eu->static['full'] ),
 				'caption' => 'Последњи снимак целе Европе. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
@@ -156,7 +156,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'blitzortung-gr',
 				'title'   => 'Blitzortung',
-				'image'   => Generate::image_url( $blitzortung_gr->path ),
+				'image'   => Generate::image_url( $blitzortung_gr->static['full'] ),
 				'caption' => 'Последњи снимак увеличан на балканско полуострво. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
