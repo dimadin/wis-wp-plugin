@@ -4,6 +4,40 @@ namespace dimadin\WIS;
 
 class Generate {
 	/**
+	 * Constructor.
+	 *
+	 * @access public
+	 *
+	 * @param string $type Name of the type.
+	 * @return object|null $latest An object with store data. If there is failure
+	 *                             with creating or getting new store, return null.
+	 */
+	public function __construct( $type ) {
+		// Set type to class property
+		$this->type = $type;
+
+		// Use class method based on type
+		if ( 'weather' == $type ) {
+			return $this->weather();
+		} else {
+			return $this->image();
+		}
+	}
+
+	/**
+	 * Instantiate class.
+	 *
+	 * @access public
+	 *
+	 * @param string $type Name of the type.
+	 * @return object|null $latest An object with store data. If there is failure
+	 *                             with creating or getting new store, return null.
+	 */
+	public static function instantiate( $type ) {
+		return new self( $type );
+	}
+
+	/**
 	 * Get map image.
 	 *
 	 * Check if there is map in cache, then retrive fresh one. If its hash is the
@@ -11,54 +45,49 @@ class Generate {
 	 * process and save fresh one to the database. Finally, cache response for
 	 * time as defined in arguments.
 	 *
-	 * @access public
+	 * @access protected
 	 *
 	 * @return object|null $latest An object with store data. If there is failure
 	 *                             with creating or getting new store, return null.
 	 */
-	public static function image( $type ) {
-		// If cached, return cache
-		if ( false !== ( $data = Cache::get( $type ) ) ) {
-			return $data;
-		}
-
-		// By default no image generation occured in this process
-		static $generated = false;
-
+	protected function image() {
 		// Get latest store
-		$latest = Store::latest( $type );
+		$latest = Store::latest( $this->type );
 
-		// If image generation occured in this process return latest store
-		if ( $generated ) {
+		// If image generation occured in this process or there is a lock, return latest store
+		if ( self::once( 'get' ) || $this->is_locked() ) {
 			return $latest;
 		}
 
+		// Lock current image type
+		$this->lock();
+
 		// Get data about map type
-		$type_args = Maps::get( $type );
+		$type_args = Maps::get( $this->type );
 
 		// Sideload remote image and get data about it
-		$data = new Sideloader( $type_args );
+		$this->data = new Sideloader( $type_args );
 
 		// Get hash of local image
-		$hash = md5_file( $data->local['file'] );
+		$hash = md5_file( $this->data->local['file'] );
 
 		// Use new file if there is no latest store or if new file is different than old one
 		if ( ! $latest || $latest->hash != $hash ) {
 			// Store that image generation occured in this process
-			$generated = true;
+			self::once( 'set' );
 
 			// Generate static image
-			self::staticize( $data );
+			$this->staticize();
 
 			// Generate animated image
-			self::animate( $data );
+			$this->animate();
 
 			// Prepare arguments for new store post
 			$args = array(
-				'type'     => $type,
-				'path'     => $data->subpath . $data->pathinfo['basename'],
-				'static'   => $data->subpath . $data->static_basename,
-				'animated' => $data->subpath . $data->animated_basename,
+				'type'     => $this->type,
+				'path'     => $this->data->subpath . $this->data->pathinfo['basename'],
+				'static'   => $this->data->subpath . $this->data->static_basename,
+				'animated' => $this->data->subpath . $this->data->animated_basename,
 				'hash'     => $hash,
 			);
 
@@ -69,15 +98,18 @@ class Generate {
 			$expiration = $type_args['expire_new'];
 		} else {
 			// Delete sideloaded image
-			@unlink( $data->local['file'] );
+			@unlink( $this->data->local['file'] );
 
 			// Cache expiration
 			$expiration = $type_args['expire_old'];
 		}
 
+		// Remove lock for current type
+		$this->remove_lock();
+
 		// Save latest store to cache
 		if ( $latest ) {
-			Cache::set( $type, $latest, $expiration );
+			Cache::set( $this->type, $latest, $expiration );
 		}
 
 		return $latest;
@@ -86,18 +118,11 @@ class Generate {
 	/**
 	 * Get weather table.
 	 *
-	 * @access public
+	 * @access protected
 	 *
 	 * @return string $content Formatted HTML weather content.
 	 */
-	public static function weather() {
-		$type = 'weather';
-
-		// If cached, return cache
-		if ( false !== ( $data = Cache::get( $type ) ) ) {
-			return $data;
-		}
-
+	protected function weather() {
 		// Get raw cities data from scrapper
 		$items = Scrapper::weather();
 
@@ -105,13 +130,13 @@ class Generate {
 		$hash = md5( json_encode( $items ) );
 
 		// Use new data if it's different than old one
-		if ( Store::latest( $type )->hash != $hash ) {
+		if ( Store::latest( $this->type )->hash != $hash ) {
 			// Format cities list
 			$content = Data::get_instance()->format_weather( $items );
 
 			// Prepare arguments for new store post
 			$args = array(
-				'type'    => $type,
+				'type'    => $this->type,
 				'content' => $content,
 				'hash'    => $hash,
 			);
@@ -119,11 +144,11 @@ class Generate {
 			// Save a new store post
 			Store::create( $args );
 		} else {
-			$content = Store::latest( $type )->content;
+			$content = Store::latest( $this->type )->content;
 		}
 
 		// Save content to cache
-		Cache::set( $type, $content );
+		Cache::set( $this->type, $content );
 
 		return $content;
 	}
@@ -131,19 +156,19 @@ class Generate {
 	/**
 	 * Add and generate if neccessary static image to sideloder object
 	 *
-	 * @link https://stackoverflow.com/a/15640297
+	 * @access protected
 	 *
-	 * @param \dimadin\WIS\Sideloader $data Object of sideloaded image.
+	 * @link https://stackoverflow.com/a/15640297
 	 */
-	public static function staticize( $data ) {
+	protected function staticize() {
 		// Save static file name
-		$data->static_basename = $data->pathinfo['filename'] . '-static.' . $data->args['static'];
+		$this->data->static_basename = $this->data->pathinfo['filename'] . '-static.' . $this->data->args['static'];
 
 		// Open image with ImageMagick
-		$image = new \Imagick( $data->local['file'] );
+		$image = new \Imagick( $this->data->local['file'] );
 
 		// If image is of mixed motion, generate static image
-		if ( 'mixed' == $data->args['motion'] ) {
+		if ( 'mixed' == $this->data->args['motion'] ) {
 			// Get all frames of the image
 			$frames = $image->coalesceImages();
 
@@ -151,28 +176,38 @@ class Generate {
 			foreach ( $frames as $frame ) {};
 
 			// Set image file format
-			$frame->setFormat( $data->args['static'] );
+			$frame->setFormat( $this->data->args['static'] );
 
 			// Save static image from the last frame
-			$frame->writeImage( $data->pathinfo['dirname'] . '/' . $data->static_basename );
+			$frame->writeImage( $this->data->pathinfo['dirname'] . '/' . $this->data->static_basename );
+
+			// Destroy and unset \Imagick object
+			$frames->clear();
+			$frames->destroy();
+			unset( $frames );
 		} else {
 			// Set image file format
-			$image->setFormat( $data->args['static'] );
+			$image->setFormat( $this->data->args['static'] );
 
 			// Save static image from the last frame
-			$image->writeImage( $data->pathinfo['dirname'] . '/' . $data->static_basename );
+			$image->writeImage( $this->data->pathinfo['dirname'] . '/' . $this->data->static_basename );
 		}
+
+		// Destroy and unset \Imagick object
+		$image->clear();
+		$image->destroy();
+		unset( $image );
 	}
 
 	/**
 	 * Generate animated image to sideloder object
 	 *
+	 * @access protected
+	 *
 	 * @link https://stackoverflow.com/questions/13997518/php-imagick-create-gif-animation
 	 * @link https://stackoverflow.com/questions/9417762/make-an-animated-gif-with-phps-imagemagick-api
-	 *
-	 * @param \dimadin\WIS\Sideloader $data Object of sideloaded image.
 	 */
-	public static function animate( $data ) {
+	protected function animate() {
 		// Create a new ImageMagick object
 		$animation = new \Imagick();
 
@@ -183,12 +218,12 @@ class Generate {
 		$statics = [];
 
 		// Loop through all latest stores of type to get static image
-		foreach ( array_reverse( Store::latests( $data->args['type'] ) ) as $store ) {
+		foreach ( array_reverse( Store::latests( $this->data->args['type'] ) ) as $store ) {
 				$statics[] = self::image_path( $store->static['full'] );
 		}
 
 		// Add current sideloaded static image
-		$statics[] = $data->pathinfo['dirname'] . '/' . $data->static_basename;
+		$statics[] = $this->data->pathinfo['dirname'] . '/' . $this->data->static_basename;
 
 		// Loop through all static images
 		foreach ( $statics as $static ) {
@@ -200,18 +235,83 @@ class Generate {
 				$animation->addImage( $frame );
 				$animation->setImageDelay( 50 );
 				$animation->nextImage();
+
+				// Destroy and unset \Imagick object
+				$frame->clear();
+				$frame->destroy();
+				unset( $frame );
 			} catch ( \Exception $e) {}
 		}
 
 		// Save animated file name
-		$data->animated_basename = $data->pathinfo['filename'] . '-animated.gif';
+		$this->data->animated_basename = $this->data->pathinfo['filename'] . '-animated.gif';
 
 		// Save animation image file
-		$animation->writeImages( $data->pathinfo['dirname'] . '/' . $data->animated_basename, true );
+		$animation->writeImages( $this->data->pathinfo['dirname'] . '/' . $this->data->animated_basename, true );
+
+		// Destroy and unset \Imagick object
+		$animation->clear();
+		$animation->destroy();
+		unset( $animation );
+	}
+
+	/**
+	 * Check whether current type is locked.
+	 *
+	 * @access protected
+	 *
+	 * @return bool Lock status of current type.
+	 */
+	protected function is_locked() {
+		if ( Cache::get( 'lock_' . $this->type ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Lock current type.
+	 *
+	 * @access protected
+	 */
+	protected function lock() {
+		Cache::set( 'lock_' . $this->type, true, MINUTE_IN_SECONDS );
+	}
+
+	/**
+	 * Remove lock for current type.
+	 *
+	 * @access protected
+	 */
+	protected function remove_lock() {
+		Cache::delete( 'lock_' . $this->type );
+	}
+
+	/**
+	 * Check or set whether any generation occured once in current request.
+	 *
+	 * @access public
+	 *
+	 * @param string $action Either 'get' for getting or 'set' for checking.
+	 * @return bool $did Current status when getting, false when setting.
+	 */
+	public static function once( $action ) {
+		static $did = false;
+
+		if ( 'get' == $action ) {
+			return $did;
+		} elseif ( 'set' == $action ) {
+			$did = true;
+		}
+
+		return false;
 	}
 
 	/**
 	 * Get URL of local image.
+	 *
+	 * @access public
 	 *
 	 * @param  string $path Path to the image file relative to base uploads directory.
 	 * @return string $url URL of local image.
@@ -222,6 +322,8 @@ class Generate {
 
 	/**
 	 * Get file path of local image.
+	 *
+	 * @access public
 	 *
 	 * @param  string $path Path to the image file relative to base uploads directory.
 	 * @return string $url File path of local image.

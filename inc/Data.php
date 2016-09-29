@@ -44,7 +44,7 @@ class Data {
 		$items = array();
 
 		// Add RHMZ item if map is available
-		if ( $rhmz = Generate::image( 'rhmz' ) ) {
+		if ( $rhmz = self::get( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz',
 				'title'   => 'Републички хидрометеоролошки завод',
@@ -54,7 +54,7 @@ class Data {
 		}
 
 		// Add DHMZ item if map is available
-		if ( $dhmz = Generate::image( 'dhmz' ) ) {
+		if ( $dhmz = self::get( 'dhmz' ) ) {
 			$items[] = array(
 				'id'      => 'dhmz',
 				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
@@ -64,7 +64,7 @@ class Data {
 		}
 
 		// Add OMSZ item if map is available
-		if ( $omsz = Generate::image( 'omsz' ) ) {
+		if ( $omsz = self::get( 'omsz' ) ) {
 			$items[] = array(
 				'id'      => 'omsz',
 				'title'   => 'Мађарски хидрометеоролошки завод',
@@ -88,7 +88,7 @@ class Data {
 		$items = array();
 
 		// Add Sat24 (Europe) item if map is available
-		if ( $sat24_eu = Generate::image( 'sat24-eu' ) ) {
+		if ( $sat24_eu = self::get( 'sat24-eu' ) ) {
 			$items[] = array(
 				'id'      => 'sat24-eu',
 				'title'   => 'Sat24',
@@ -98,7 +98,7 @@ class Data {
 		}
 
 		// Add Sat24 (Balkan) item if map is available
-		if ( $sat24_it = Generate::image( 'sat24-it' ) ) {
+		if ( $sat24_it = self::get( 'sat24-it' ) ) {
 			$items[] = array(
 				'id'      => 'sat24-it',
 				'title'   => 'Sat24',
@@ -108,7 +108,7 @@ class Data {
 		}
 
 		// Add Météo Massif item if map is available
-		if ( $mmc = Generate::image( 'mmc' ) ) {
+		if ( $mmc = self::get( 'mmc' ) ) {
 			$items[] = array(
 				'id'      => 'mmc',
 				'title'   => 'Météo Massif central',
@@ -118,7 +118,7 @@ class Data {
 		}
 
 		// Add EUMETSAT (fixed) item if map is available
-		if ( $irc_sat = Generate::image( 'irc-sat' ) ) {
+		if ( $irc_sat = self::get( 'irc-sat' ) ) {
 			$items[] = array(
 				'id'      => 'irc-sat',
 				'title'   => 'EUMETSAT',
@@ -142,7 +142,7 @@ class Data {
 		$items = array();
 
 		// Add Blitzortung (Europe) item if map is available
-		if ( $blitzortung_eu = Generate::image( 'blitzortung-eu' ) ) {
+		if ( $blitzortung_eu = self::get( 'blitzortung-eu' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-eu',
 				'title'   => 'Blitzortung',
@@ -152,7 +152,7 @@ class Data {
 		}
 
 		// Add Blitzortung (Balkan) item if map is available
-		if ( $blitzortung_gr = Generate::image( 'blitzortung-gr' ) ) {
+		if ( $blitzortung_gr = self::get( 'blitzortung-gr' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-gr',
 				'title'   => 'Blitzortung',
@@ -176,7 +176,7 @@ class Data {
 		$items = array();
 
 		// Add RHMZ item if map is available
-		if ( $rhmz = Generate::image( 'rhmz' ) ) {
+		if ( $rhmz = self::get( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz-animated',
 				'title'   => 'Републички хидрометеоролошки завод',
@@ -186,7 +186,7 @@ class Data {
 		}
 
 		// Add DHMZ item if map is available
-		if ( $dhmz = Generate::image( 'dhmz' ) ) {
+		if ( $dhmz = self::get( 'dhmz' ) ) {
 			$items[] = array(
 				'id'      => 'dhmz-animated',
 				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
@@ -196,7 +196,7 @@ class Data {
 		}
 
 		// Add OMSZ item if map is available
-		if ( $omsz = Generate::image( 'omsz' ) ) {
+		if ( $omsz = self::get( 'omsz' ) ) {
 			$items[] = array(
 				'id'      => 'omsz-animated',
 				'title'   => 'Мађарски хидрометеоролошки завод',
@@ -206,7 +206,7 @@ class Data {
 		}
 
 		// Add Sat24 (Europe) item if map is available
-		if ( $sat24_eu = Generate::image( 'sat24-eu' ) ) {
+		if ( $sat24_eu = self::get( 'sat24-eu' ) ) {
 			$items[] = array(
 				'id'      => 'sat24-eu-animated',
 				'title'   => 'Sat24',
@@ -216,7 +216,7 @@ class Data {
 		}
 
 		// Add Sat24 (Balkan) item if map is available
-		if ( $sat24_it = Generate::image( 'sat24-it' ) ) {
+		if ( $sat24_it = self::get( 'sat24-it' ) ) {
 			$items[] = array(
 				'id'      => 'sat24-it-animated',
 				'title'   => 'Sat24',
@@ -226,7 +226,7 @@ class Data {
 		}
 
 		// Add Météo Massif item if map is available
-		if ( $mmc = Generate::image( 'mmc' ) ) {
+		if ( $mmc = self::get( 'mmc' ) ) {
 			$items[] = array(
 				'id'      => 'mmc-animated',
 				'title'   => 'Météo Massif central',
@@ -236,7 +236,7 @@ class Data {
 		}
 
 		// Add EUMETSAT (fixed) item if map is available
-		if ( $irc_sat = Generate::image( 'irc-sat' ) ) {
+		if ( $irc_sat = self::get( 'irc-sat' ) ) {
 			$items[] = array(
 				'id'      => 'irc-sat-animated',
 				'title'   => 'EUMETSAT',
@@ -246,7 +246,7 @@ class Data {
 		}
 
 		// Add Blitzortung (Europe) item if map is available
-		if ( $blitzortung_eu = Generate::image( 'blitzortung-eu' ) ) {
+		if ( $blitzortung_eu = self::get( 'blitzortung-eu' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-eu-animated',
 				'title'   => 'Blitzortung',
@@ -256,7 +256,7 @@ class Data {
 		}
 
 		// Add Blitzortung (Balkan) item if map is available
-		if ( $blitzortung_gr = Generate::image( 'blitzortung-gr' ) ) {
+		if ( $blitzortung_gr = self::get( 'blitzortung-gr' ) ) {
 			$items[] = array(
 				'id'      => 'blitzortung-gr-animated',
 				'title'   => 'Blitzortung',
@@ -276,7 +276,7 @@ class Data {
 	 * @return array $items An array of cities with weather data.
 	 */
 	public static function weather() {
-		return Generate::weather();
+		return self::get( 'weather' );
 	}
 
 	/**
@@ -307,6 +307,31 @@ class Data {
 		Cache::set( __METHOD__, $items );
 
 		return $items;
+	}
+
+	/**
+	 * Get latest store of type.
+	 *
+	 * If type wasn't cached, schedule Backdrop task to retrive freshest content
+	 * from original place.
+	 *
+	 * @access public
+	 *
+	 * @param string $type Name of the type.
+	 * @return object|bool $latest An object with store data. Default false.
+	 */
+	public static function get( $type ) {
+		// If cached, return cache
+		if ( false !== ( $data = Cache::get( $type ) ) ) {
+			return $data;
+		}
+
+		// Schedule generation
+		$task = new \HM\Backdrop\Task( __NAMESPACE__ . '\Generate::instantiate', $type );
+		$task->schedule();
+
+		// Return latest store
+		return Store::latest( $type );
 	}
 
 	/**
