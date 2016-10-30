@@ -326,9 +326,11 @@ class Data {
 			return $data;
 		}
 
-		// Schedule generation
-		$task = new \HM\Backdrop\Task( __NAMESPACE__ . '\Generate::instantiate', $type );
-		$task->schedule();
+		// Schedule generation if this isn't Backdrop request
+		if ( ! did_action( 'wp_ajax_nopriv_hm_backdrop_run' ) ) {
+			$task = new \HM\Backdrop\Task( __NAMESPACE__ . '\Generate::instantiate', $type );
+			$task->schedule();
+		}
 
 		// Return latest store
 		return Store::latest( $type );
