@@ -51,6 +51,9 @@ class Generate {
 	 *                             with creating or getting new store, return null.
 	 */
 	protected function image() {
+		// Increase memory
+		wp_raise_memory_limit( 'image' );
+
 		// Get latest store
 		$latest = Store::latest( $this->type );
 
