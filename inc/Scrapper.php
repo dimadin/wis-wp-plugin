@@ -43,43 +43,17 @@ class Scrapper {
 		// Load content in HTML DOM parser
 		$dom = HtmlDomParser::str_get_html( $page_1 );
 
-		// Set default values
-		$page_2_url = '';
-		$td_num = 1;
-		$a_num = 1;
+		// Find <div> with ID 'kompozit'
+		$div = $dom->find( 'div[id=kompozit]', 0 );
 
-		// Find <div> with ID 'napomena350_450'
-		$div = $dom->find( 'div[id=napomena350_450]', 0 );
+		// Find <a> in <div>
+		$a = $div->find( 'a', 0 );
 
-		// Find <table> in <div>
-		$table= $div->find( 'table', 0 );
-
-		// Loop through each <tr> in <table>
-		foreach ( $table->find( 'tr' ) as $tr ) {
-			// Loop through each <td> with class 'bela75' in it
-			foreach ( $tr->find( 'td.bela75' ) as $td ) {
-				// Only proceed if this is third <td>
-				if ( 2 == $td_num ) {
-					// Loop through each <a> in it
-					foreach ( $tr->find( 'a' ) as $a ) {
-						// Only proceed if this is second <a>
-						if ( 2 == $a_num ) {
-							// Subpath of second page is its link
-							$page_2_url = $a->href;
-						}
-
-						// Increase number of looped <a>s
-						$a_num++;
-					}
-				}
-
-				// Increase number of looped <td>s
-				$td_num++;
-			}
-		}
+		// Subpath of second page is its link
+		$page_2_url = isset( $a->href ) ? $a->href : '';
 
 		// Only proceed if subpath of second page exist
-		if ( ! $page_2_url ) {
+		if ( ! $page_2_url || false === strpos( $page_2_url, 'radarska4.php' ) ) {
 			return;
 		}
 
