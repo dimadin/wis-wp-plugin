@@ -228,16 +228,25 @@ class Generate {
 		// Add current sideloaded static image
 		$statics[] = $this->data->pathinfo['dirname'] . '/' . $this->data->static_basename;
 
+		// Count number of images (zero based)
+		$statics_num = count( $statics ) - 1;
+
 		// Loop through all static images
-		foreach ( $statics as $static ) {
+		foreach ( $statics as $i => $static ) {
 			try {
 				// Create new frame from static image
 				$frame = new \Imagick( $static );
 
 				// Add frame to animation
 				$animation->addImage( $frame );
-				$animation->setImageDelay( 50 );
-				$animation->nextImage();
+
+				// Change image delay depending if it's last one
+				if ( $i == $statics_num ) {
+					$animation->setImageDelay( 150 );
+				} else {
+					$animation->setImageDelay( 50 );
+					$animation->nextImage();
+				}
 
 				// Destroy and unset \Imagick object
 				$frame->clear();
