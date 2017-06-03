@@ -43,12 +43,15 @@ class Data {
 		// Prepare response
 		$items = array();
 
+		// Set size based on type of requesting device
+		$size = wp_is_mobile() ? 'cropped' : 'full';
+
 		// Add RHMZ item if map is available
 		if ( $rhmz = self::get( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz',
 				'title'   => 'Републички хидрометеоролошки завод',
-				'image'   => Generate::image_url( $rhmz->static['full'] ),
+				'image'   => Generate::image_url( $rhmz->static[ $size ] ),
 				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
@@ -58,7 +61,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'dhmz',
 				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
-				'image'   => Generate::image_url( $dhmz->static['full'] ),
+				'image'   => Generate::image_url( $dhmz->static[ $size ] ),
 				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
@@ -175,12 +178,15 @@ class Data {
 		// Prepare response
 		$items = array();
 
+		// Set size based on type of requesting device
+		$size = wp_is_mobile() ? 'cropped' : 'full';
+
 		// Add RHMZ item if map is available
 		if ( $rhmz = self::get( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz-animated',
 				'title'   => 'Републички хидрометеоролошки завод',
-				'image'   => Generate::image_url( $rhmz->animated['full'] ),
+				'image'   => Generate::image_url( $rhmz->animated[ $size ] ),
 				'caption' => 'Анимација за последња два сата снимака Србије. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
@@ -190,7 +196,7 @@ class Data {
 			$items[] = array(
 				'id'      => 'dhmz-animated',
 				'title'   => 'Државни хидрометеоролошки завод (Хрватска)',
-				'image'   => Generate::image_url( $dhmz->animated['full'] ),
+				'image'   => Generate::image_url( $dhmz->animated[ $size ] ),
 				'caption' => 'Анимација за последња два сата снимака источне Хрватске. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}

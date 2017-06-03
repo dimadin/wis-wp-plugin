@@ -82,6 +82,14 @@ class Generate {
 			// Generate static image
 			$this->staticize();
 
+			// Crop image if it supports that
+			if ( isset( $this->data->args['crop'] ) && $this->data->args['crop']['main_source'] ) {
+				$this->crop();
+
+				// Generate animated cropped image
+				$this->animate( 'cropped' );
+			}
+
 			// Generate animated image
 			$this->animate();
 
@@ -93,6 +101,12 @@ class Generate {
 				'animated' => $this->data->subpath . $this->data->animated_basename,
 				'hash'     => $hash,
 			);
+
+			// Add arguments for cropped image if it supports it
+			if ( isset( $this->data->crop_basename ) ) {
+				$args['crop']          = $this->data->subpath . $this->data->crop_basename;
+				$args['animated_crop'] = $this->data->subpath . $this->data->animated_crop_basename;
+			}
 
 			// Save a new store post and get it's object
 			$latest = Store::get( Store::create( $args ) );
@@ -203,30 +217,89 @@ class Generate {
 	}
 
 	/**
+	 * Generate cropped image to the sideloader object.
+	 *
+	 * @access protected
+	 *
+	 * @link https://www.sitepoint.com/crop-and-resize-images-with-imagemagick/
+	 * @link https://www.sitepoint.com/watermarking-images/
+	 */
+	protected function crop() {
+		// Save cropped file name
+		$this->data->crop_basename = $this->data->pathinfo['filename'] . '-crop.' . $this->data->args['static'];
+
+		// Open image with ImageMagick
+		$crop = new \Imagick( $this->data->pathinfo['dirname'] . '/' . $this->data->static_basename );
+
+		// Assign variables for cropping
+		list( $width, $height, $x, $y ) = $this->data->args['crop']['main_source'];
+
+		// Crop image
+		$crop->cropImage( $width, $height, $x, $y );
+
+		// Add time on top if image type supports it
+		if ( isset( $this->data->args['crop']['time_source'] ) && $this->data->args['crop']['time_placement'] ) {
+			// Open image with ImageMagick
+			$time_crop = new \Imagick( $this->data->pathinfo['dirname'] . '/' . $this->data->static_basename );
+
+			// Assign variables for cropping
+			list( $width, $height, $x, $y ) = $this->data->args['crop']['time_source'];
+
+			// Crop image
+			$time_crop->cropImage( $width, $height, $x, $y );
+
+			// Assign variables for placement
+			list( $x, $y ) = $this->data->args['crop']['time_placement'];
+
+			// Add time on top
+			$crop->compositeImage( $time_crop, \imagick::COMPOSITE_OVER, $x, $y );
+
+			// Destroy and unset \Imagick object
+			$time_crop->clear();
+			$time_crop->destroy();
+			unset( $time_crop );
+		}
+
+		// Save cropped image file
+		$crop->writeImage( $this->data->pathinfo['dirname'] . '/' . $this->data->crop_basename );
+
+		// Destroy and unset \Imagick object
+		$crop->clear();
+		$crop->destroy();
+		unset( $crop );
+	}
+
+	/**
 	 * Generate animated image to sideloder object
 	 *
 	 * @access protected
 	 *
 	 * @link https://stackoverflow.com/questions/13997518/php-imagick-create-gif-animation
 	 * @link https://stackoverflow.com/questions/9417762/make-an-animated-gif-with-phps-imagemagick-api
+	 * 
+	 * @param string $size Optional. Determine size of original images. Default is 'full'.
 	 */
-	protected function animate() {
+	protected function animate( $size = 'full' ) {
 		// Create a new ImageMagick object
 		$animation = new \Imagick();
 
 		// Set GIF as a format of object
 		$animation->setFormat( 'GIF' );
 
+		// Choose what property to use from size
+		$current_basename  = ( 'cropped' == $size ) ? $this->data->crop_basename : $this->data->static_basename;
+		$animated_basename = ( 'cropped' == $size ) ? 'animated_crop_basename'   : 'animated_basename';
+
 		// By default there are no static images
 		$statics = [];
 
 		// Loop through all latest stores of type to get static image
 		foreach ( array_reverse( Store::latests( $this->data->args['type'] ) ) as $store ) {
-				$statics[] = self::image_path( $store->static['full'] );
+				$statics[] = self::image_path( $store->static[ $size ] );
 		}
 
 		// Add current sideloaded static image
-		$statics[] = $this->data->pathinfo['dirname'] . '/' . $this->data->static_basename;
+		$statics[] = $this->data->pathinfo['dirname'] . '/' . $current_basename;
 
 		// Count number of images (zero based)
 		$statics_num = count( $statics ) - 1;
@@ -242,7 +315,7 @@ class Generate {
 
 				// Change image delay depending if it's last one
 				if ( $i == $statics_num ) {
-					$animation->setImageDelay( 150 );
+					$animation->setImageDelay( 125 );
 				} else {
 					$animation->setImageDelay( 50 );
 					$animation->nextImage();
@@ -256,10 +329,10 @@ class Generate {
 		}
 
 		// Save animated file name
-		$this->data->animated_basename = $this->data->pathinfo['filename'] . '-animated.gif';
+		$this->data->$animated_basename = $this->data->pathinfo['filename'] . '-animated-' . $size . '.gif';
 
 		// Save animation image file
-		$animation->writeImages( $this->data->pathinfo['dirname'] . '/' . $this->data->animated_basename, true );
+		$animation->writeImages( $this->data->pathinfo['dirname'] . '/' . $this->data->$animated_basename, true );
 
 		// Destroy and unset \Imagick object
 		$animation->clear();

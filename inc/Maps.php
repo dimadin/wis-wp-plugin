@@ -15,11 +15,21 @@ class Maps {
 		'rhmz' => array(
 			'extension'        => '.png',
 			'static'           => 'jpg',
+			'crop'             => array(
+				'main_source'    => array( 565, 565, 0, 0 ),
+				'time_source'    => array( 157, 20, 586, 22 ),
+				'time_placement' => array( 396, 9 ),
+			),
 		),
 		// http://vrijeme.hr/aktpod.php?id=oradar&param=stat
 		'dhmz' => array(
 			'extension'        => '.gif',
 			'static'           => 'png',
+			'crop'             => array(
+				'main_source'    => array( 480, 480, 0, 0 ),
+				'time_source'    => array( 150, 44, 485, 140 ),
+				'time_placement' => array( 316, 9 ),
+			),
 			'remote_image_url' => 'http://vrijeme.hr/oradar.gif',
 		),
 		// http://www.met.hu/en/idojaras/aktualis_idojaras/radar/

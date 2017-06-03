@@ -162,12 +162,14 @@ class Store {
 	public static function create( $args ) {
 		// Set default arguments
 		$defaults = array(
-			'type'     => '',
-			'content'  => '',
-			'path'     => '',
-			'static'   => '',
-			'animated' => '',
-			'hash'     =>'',
+			'type'          => '',
+			'content'       => '',
+			'path'          => '',
+			'static'        => '',
+			'crop'          => '',
+			'animated'      => '',
+			'animated_crop' => '',
+			'hash'          => '',
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -182,12 +184,14 @@ class Store {
 
 		// If main post is created, add meta values
 		if ( $store_id ) {
-			update_post_meta( $store_id, '_store_type',                    $r['type']     );
-			update_post_meta( $store_id, '_store_content',                 $r['content']  );
-			update_post_meta( $store_id, '_store_file_path',               $r['path']     );
-			update_post_meta( $store_id, '_store_file_hash',               $r['hash']     );
-			update_post_meta( $store_id, '_store_static_full_file_path',   $r['static']   );
-			update_post_meta( $store_id, '_store_animated_full_file_path', $r['animated'] );
+			update_post_meta( $store_id, '_store_type',                       $r['type']          );
+			update_post_meta( $store_id, '_store_content',                    $r['content']       );
+			update_post_meta( $store_id, '_store_file_path',                  $r['path']          );
+			update_post_meta( $store_id, '_store_file_hash',                  $r['hash']          );
+			update_post_meta( $store_id, '_store_static_full_file_path',      $r['static']        );
+			update_post_meta( $store_id, '_store_static_cropped_file_path',   $r['crop']          );
+			update_post_meta( $store_id, '_store_animated_full_file_path',    $r['animated']      );
+			update_post_meta( $store_id, '_store_animated_cropped_file_path', $r['animated_crop'] );
 		}
 
 		return $store_id;
@@ -228,8 +232,14 @@ class Store {
 				if ( $static = $store->static['full'] ) {
 					@unlink( Generate::image_path( $static ) );
 				}
+				if ( $crop = $store->static['crop'] ) {
+					@unlink( Generate::image_path( $crop ) );
+				}
 				if ( $animated = $store->animated['full'] ) {
 					@unlink( Generate::image_path( $animated ) );
+				}
+				if ( $animated_crop = $store->animated['crop'] ) {
+					@unlink( Generate::image_path( $animated_crop ) );
 				}
 
 				// Trash post
