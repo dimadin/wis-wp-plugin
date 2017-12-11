@@ -462,8 +462,11 @@ class Data {
 						break;
 				}
 
+				// Get wind speed in km/h
+				$alt_speed = number_format_i18n( str_replace( ' m/s', '', $item['speed'] ) * 3.6 );
+
 				// Prepare full text for wind
-				$wind = ', дува ' . $wind . ' ветар брзином од ' . $item['speed'];
+				$wind = ', дува ' . $wind . ' ветар брзином од ' . $item['speed'] . ' (' . $alt_speed . ' km/h)';
 			} else {
 				$wind = '';
 			}
