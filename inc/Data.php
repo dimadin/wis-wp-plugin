@@ -401,6 +401,30 @@ class Data {
 					case 'NW' :
 						$wind = 'северозападни';
 						break;
+					case 'NNE' :
+						$wind = 'северни - североисточни';
+						break;
+					case 'NNW' :
+						$wind = 'северни - северозападни';
+						break;
+					case 'ENE' :
+						$wind = 'источни - североисточни';
+						break;
+					case 'ENW' :
+						$wind = 'источни - северозападни';
+						break;
+					case 'SNE' :
+						$wind = 'јужни - североисточни';
+						break;
+					case 'SNW' :
+						$wind = 'јужни - северозападни';
+						break;
+					case 'WNE' :
+						$wind = 'западни - североисточни';
+						break;
+					case 'WNW' :
+						$wind = 'западни - северозападни';
+						break;
 					case 'S' :
 						$wind = 'јужни';
 						break;
@@ -409,6 +433,26 @@ class Data {
 						break;
 					case 'SW' :
 						$wind = 'југозападни';
+					case 'NSE' :
+						$wind = 'северни - југоисточни';
+						break;
+					case 'NSW' :
+						$wind = 'северни - југозападни';
+					case 'ESE' :
+						$wind = 'источни - југоисточни';
+						break;
+					case 'ESW' :
+						$wind = 'источни - југозападни';
+					case 'SSE' :
+						$wind = 'јужни - југоисточни';
+						break;
+					case 'SSW' :
+						$wind = 'јужни - југозападни';
+					case 'WSE' :
+						$wind = 'западни - југоисточни';
+						break;
+					case 'WSW' :
+						$wind = 'западни - југозападни';
 						break;
 					case 'E' :
 						$wind = 'источни';
