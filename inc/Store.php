@@ -232,13 +232,13 @@ class Store {
 				if ( $static = $store->static['full'] ) {
 					@unlink( Generate::image_path( $static ) );
 				}
-				if ( $crop = $store->static['crop'] ) {
+				if ( $crop = $store->static['cropped'] ) {
 					@unlink( Generate::image_path( $crop ) );
 				}
 				if ( $animated = $store->animated['full'] ) {
 					@unlink( Generate::image_path( $animated ) );
 				}
-				if ( $animated_crop = $store->animated['crop'] ) {
+				if ( $animated_crop = $store->animated['cropped'] ) {
 					@unlink( Generate::image_path( $animated_crop ) );
 				}
 
