@@ -50,7 +50,17 @@ class Data {
 		if ( $rhmz = self::get( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz',
-				'title'   => 'Републички хидрометеоролошки завод',
+				'title'   => 'Републички хидрометеоролошки завод (композит)',
+				'image'   => Generate::image_url( $rhmz->static[ $size ] ),
+				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
+			);
+		}
+
+		// Add RHMZ BG item if map is available
+		if ( $rhmz = self::get( 'rhmz-bg' ) ) {
+			$items[] = array(
+				'id'      => 'rhmz-bg',
+				'title'   => 'Републички хидрометеоролошки завод (Београд)',
 				'image'   => Generate::image_url( $rhmz->static[ $size ] ),
 				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
 			);
@@ -195,7 +205,17 @@ class Data {
 		if ( $rhmz = self::get( 'rhmz' ) ) {
 			$items[] = array(
 				'id'      => 'rhmz-animated',
-				'title'   => 'Републички хидрометеоролошки завод',
+				'title'   => 'Републички хидрометеоролошки завод (композит)',
+				'image'   => Generate::image_url( $rhmz->animated[ $size ] ),
+				'caption' => 'Анимација за последња два сата снимака Србије. Време на слици је UTC (Universal Coordinated Time).',
+			);
+		}
+
+		// Add RHMZ BG item if map is available
+		if ( $rhmz = self::get( 'rhmz-bg' ) ) {
+			$items[] = array(
+				'id'      => 'rhmz--bg-animated',
+				'title'   => 'Републички хидрометеоролошки завод (Београд)',
 				'image'   => Generate::image_url( $rhmz->animated[ $size ] ),
 				'caption' => 'Анимација за последња два сата снимака Србије. Време на слици је UTC (Universal Coordinated Time).',
 			);

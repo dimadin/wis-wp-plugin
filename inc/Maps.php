@@ -21,6 +21,11 @@ class Maps {
 				'time_placement' => array( 396, 9 ),
 			),
 		),
+		// http://www.hidmet.gov.rs/ciril/osmotreni/radarska.php
+		'rhmz-bg' => array(
+			'extension'        => '.png',
+			'static'           => 'jpg',
+		),
 		// http://vrijeme.hr/aktpod.php?id=oradar&param=stat
 		'dhmz' => array(
 			'extension'        => '.gif',
@@ -109,7 +114,9 @@ class Maps {
 		// For RHMZ and OMSZ remote image URL must be got by fetching
 		if ( 'rhmz' == $key ) {
 			$value['remote_image_url'] = Scrapper::rhmz();
-		}	else if ( 'omsz' == $key ) {
+		} else if ( 'rhmz-bg' == $key ) {
+			$value['remote_image_url'] = Scrapper::rhmz( 'beograd' );
+		} else if ( 'omsz' == $key ) {
 			$value['remote_image_url'] = Scrapper::omsz();
 		} else if ( 'opera' == $key ) {
 			$value['remote_image_url'] = Scrapper::opera();

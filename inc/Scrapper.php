@@ -33,7 +33,7 @@ class Scrapper {
 	 *
 	 * @return string $url Full URL of image.
 	 */
-	public static function rhmz() {
+	public static function rhmz( $id = 'kompozit' ) {
 		// Set URL of the first page that we need to scrape
 		$page_1_url = 'http://www.hidmet.gov.rs/ciril/osmotreni/radarska.php';
 
@@ -43,8 +43,8 @@ class Scrapper {
 		// Load content in HTML DOM parser
 		$dom = HtmlDomParser::str_get_html( $page_1 );
 
-		// Find <div> with ID 'kompozit'
-		$div = $dom->find( 'div[id=kompozit]', 0 );
+		// Find <div> with ID 'kompozit' or 'beograd'
+		$div = $dom->find( 'div[id=' . $id . ']', 0 );
 
 		// Find <a> in <div>
 		$a = $div->find( 'a', 0 );
