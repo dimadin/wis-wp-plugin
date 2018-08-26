@@ -123,6 +123,36 @@ class Scrapper {
 	}
 
 	/**
+	 * Scrape EUMETNET to get Opera radar map image URL.
+	 *
+	 * @access public
+	 *
+	 * @return string $url Full URL of image.
+	 */
+	public static function opera() {
+		// Set URL of the first page that we need to scrape
+		$page_1_url = 'https://cdn.fmi.fi/demos/eumetnet-web-site-radar-animator/list-images/';
+
+		// Open page and get its content
+		$page_1 = wp_remote_retrieve_body( wp_remote_get( $page_1_url ) );
+
+		// Get an array of response
+		$content = json_decode( trim( $page_1 ), true );
+
+		$url = '';
+
+		if ( is_array( $content ) && array_key_exists( 'images', $content ) && is_array( $content['images'] ) ) {
+			foreach ( $content['images'] as $image ) {
+				if ( is_array( $image ) && array_key_exists( 'url', $image ) ) {
+					$url = $image['url'];
+				}
+			}
+		}
+
+		return $url;
+	}
+
+	/**
 	 * Scrape weathers from RHMZ feed.
 	 *
 	 * @access public

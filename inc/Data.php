@@ -76,6 +76,16 @@ class Data {
 			);
 		}
 
+		// Add Opera item if map is available
+		if ( $opera = self::get( 'opera' ) ) {
+			$items[] = array(
+				'id'      => 'opera',
+				'title'   => 'EUMETNET',
+				'image'   => Generate::image_url( $opera->static['full'] ),
+				'caption' => 'Време на слици је UTC (Universal Coordinated Time).',
+			);
+		}
+
 		return $items;
 	}
 
@@ -208,6 +218,16 @@ class Data {
 				'title'   => 'Мађарски хидрометеоролошки завод',
 				'image'   => Generate::image_url( $omsz->animated['full'] ),
 				'caption' => 'Анимација за последња два сата снимака Мађарске.',
+			);
+		}
+
+		// Add Opera item if map is available
+		if ( $opera = self::get( 'opera' ) ) {
+			$items[] = array(
+				'id'      => 'opera-animated',
+				'title'   => 'EUMETNET',
+				'image'   => Generate::image_url( $opera->animated['full'] ),
+				'caption' => 'Анимација за последња два сата снимака Европе. Време на слици је UTC (Universal Coordinated Time).',
 			);
 		}
 

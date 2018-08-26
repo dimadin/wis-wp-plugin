@@ -38,6 +38,12 @@ class Maps {
 			'static'           => 'jpg',
 			'expire_new'       => 10,
 		),
+		// http://eumetnet.eu/activities/observations-programme/current-activities/opera-radar-animation/
+		'opera' => array(
+			'extension'        => '.gif',
+			'static'           => 'png',
+			'motion'           => 'mixed',
+		),
 		// http://serbianmeteo.com/satelitska-slika/
 		'sat24-eu' => array(
 			'extension'        => '.gif',
@@ -105,6 +111,8 @@ class Maps {
 			$value['remote_image_url'] = Scrapper::rhmz();
 		}	else if ( 'omsz' == $key ) {
 			$value['remote_image_url'] = Scrapper::omsz();
+		} else if ( 'opera' == $key ) {
+			$value['remote_image_url'] = Scrapper::opera();
 		}
 
 		// Default expiration for new is 10 minutes, otherwise convert minutes to seconds
